@@ -7,7 +7,9 @@ EdgeTrack
 
 ## Team Overview
 Nicholas Szczepura - nszczepura
+
 Kevin Sanchez - knsanchez0001
+
 Eliezer Encarnacion - eliel15000
 
 ## Innovative Idea

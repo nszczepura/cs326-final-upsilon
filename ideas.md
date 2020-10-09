@@ -23,4 +23,3 @@ Automated trade input - Many existing applications require manual input of past 
 Performance metrics - We will generate various performance metrics based on the trade data, things likes profit/loss, average time spent in trade, average profit, average loss, W/L long positions, W/L short positions
 
 Portfolio vs Reference - We want to chart the users portfolio performance against market indices and/or given growth objectives
-

@@ -7,9 +7,11 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <span class="navbar-brand mb-0 h1"><em>EDGETRACK</em> <sub><em > FIND YOUR EDGE</em></sub></span>
+
+            <span class="navbar-brand mb-0 ml-3 h1"><em>EDGETRACK</em> <sub><em > FIND YOUR EDGE</em></sub></span>
           
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse mr-3" id="navbarSupportedContent">
+
               <ul class="navbar-nav ml-auto">
                 <span class="border-right">
                     <li class="nav-item">
@@ -33,6 +35,24 @@
                 </span>
               </ul>
             </div>
-          </nav>
+
+        </nav>
+        <div class="ml-5 mt-5">
+            <label for="userID"><em>USER ID:</em></label>
+            <input type="text" id="userID" name="user ID">
+            <br><br>
+            <label for="exchange"><em>Exchange:</em></label>
+            <select id="exchange" name="Exchange">
+                <option value="appl">APPL</option>
+                <option value="amd">AMD</option>
+            </select>
+            <br><br>
+            <label for="apiKey"><em>API KEY:</em></label>
+            <input type="text" id="apiKey" name="API Key">
+            <br><br>
+            <label for="apiSecret"><em>API SECRET:</em></label>
+            <input type="text" id="apiSecret" name="API Secret">
+        </div>
+
     </body>
 </html>

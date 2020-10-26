@@ -1,12 +1,12 @@
 ## Wireframes
 
-![Home Page](./wireframe)
-![Trade History](./trade-history)
-![Account Page](./acc)
+![Home Page](./wireframe.jpg)
+![Trade History](./trade-history.jpg)
+![Account Page](./acc.jpg)
 
 ## HTML
 
-![Home html](./homehtml)
-![Trade History html](./tradehtml)
-![Account html](./acchtml)
-![Notes html (once connected to the data the notes page will allow users to download a report with their notes for those who want to keep records)](./noteshtml)
+![Home html](./homehtml.png)
+![Trade History html](./tradehtml.png)
+![Account html](./acchtml.png)
+![Notes html (once connected to the data the notes page will allow users to download a report with their notes for those who want to keep records)](./noteshtml.png)

@@ -1,4 +1,4 @@
-## Wireframes
+# Wireframes
 
 Home
 ![Home Page](./wireframe.jpg)
@@ -9,7 +9,7 @@ Trade History
 Account
 ![Account Page](./acc.jpg)
 
-## HTML
+# HTML
 
 Home
 ![Home html](./homehtml.png)
@@ -23,9 +23,9 @@ Account
 Notes (once connected to the data the notes page will allow users to download a report with their notes for those who want to keep records)
 ![Notes html](./noteshtml.png)
 
-## Data
+# Data
 
-# Automated trade input -
+## Automated trade input -
 
 User's API key
 
@@ -34,12 +34,12 @@ User's API secret
 User ID
 
 
-# Performance metrics - 
+## Performance metrics - 
 
 Generated from data pulled from exchange API
 
 
-# Portfolio vs Reference -
+## Portfolio vs Reference -
 
 User Objective:
 
@@ -52,6 +52,6 @@ Desired % gain
 Compounding period (daily, weekly, monthly)
 
 
-# Notes -
+## Notes -
 
 Users should be able to write notes and download a report with their notes

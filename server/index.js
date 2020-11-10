@@ -1,6 +1,6 @@
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import {readFileSync} from "fs";
+import { readFileSync } from "fs";
 const express = _express["default"];
 const pgp = _pgp["default"]({
     connect(client) {
@@ -23,22 +23,22 @@ async function connectAndRun(task) {
     let connection = null;
 
     try {
-        connection = await db.connect();
-        return await task(connection);
+        connection = await db.connect().catch(err => console.log(err.stack));
+        return await task(connection).catch(err => console.log(err.stack));
     } catch (e) {
         throw e;
     } finally {
         try {
             connection.done();
-        } catch(ignored) {
+        } catch (ignored) {
 
         }
     }
 }
 
 async function getTradeHistory() {
-    //return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
-    return JSON.parse(readFileSync("sample.json"));
+    return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
+    //return JSON.parse(readFileSync("sample.json"));
 }
 
 async function registerUser(user, password) {
@@ -47,7 +47,7 @@ async function registerUser(user, password) {
 
 const app = express();
 app.get("/tradeHistory", async (req, res) => {
-    const tradeList = await getTradeHistory();
+    const tradeList = await getTradeHistory().catch(err => console.log(err.stack));
     res.send(JSON.stringify(tradeList));
 });
 

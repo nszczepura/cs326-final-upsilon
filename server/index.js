@@ -37,8 +37,8 @@ async function connectAndRun(task) {
 }
 
 async function getTradeHistory() {
-    //return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
-    return JSON.parse(readFileSync("sample.json"));
+    return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
+    //return JSON.parse(readFileSync("sample.json"));
 }
 
 async function registerUser(user, password) {

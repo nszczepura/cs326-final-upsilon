@@ -1,6 +1,5 @@
 import * as _pgp from "pg-promise";
 import * as _express from "express";
-import {readFileSync} from "fs";
 const express = _express["default"];
 const pgp = _pgp["default"]({
     connect(client) {

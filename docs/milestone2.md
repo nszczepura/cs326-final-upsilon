@@ -1,18 +1,18 @@
 ## Home
 
-![Home html](./homehtml.png)
+![Home html](./home2.png)
 
 GETS information from dummy data to present on home page
 
 ## Trade History
 
-![Trade History html](./tradehtml.png)
+![Trade History html](./trades2.png)
 
 GETS information from dummy data to present on a trade history table
 
 ## Account
 
-![Account html](./acchtml.png)
+![Account html](./account2.png)
 
 POSTS a new user name and password for registration
 

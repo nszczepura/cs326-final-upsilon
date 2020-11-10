@@ -42,7 +42,7 @@ async function getTradeHistory() {
 }
 
 async function registerUser(user, password) {
-    return await connectAndRun(db => db.none("INSERT INTO Accounts VALUES ($1, $2);", [name, password]));
+    return await connectAndRun(db => db.none("INSERT INTO Accounts VALUES ($1, $2);", [user, password]));
 }
 
 const app = express();

@@ -1,0 +1,45 @@
+{
+    "name": "edgetrack",
+    "type": "module",
+    "scripts": {
+        "start": "node server/index.js",
+        "lint": "eslint client/ server/"
+    },
+    "devDependencies": {
+        "eslint": "^7.11.0",
+        "http-server": "^0.12.3"
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true,
+            "es2021": true,
+            "node": true
+        },
+        "extends": "eslint:recommended",
+        "parserOptions": {
+            "ecmaVersion": 12,
+            "sourceType": "module"
+        },
+        "rules": {
+            "consistent-return": "error",
+            "no-var": "error",
+            "eqeqeq": "error",
+            "semi": [
+                "error",
+                "always"
+            ],
+            "curly": [
+                "warn",
+                "all"
+            ],
+            "prefer-const": [
+                "warn",
+                {}
+            ]
+        }
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "pg-promise": "^10.7.3"
+    }
+}

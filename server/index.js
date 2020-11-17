@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use strict';
 
 // For loading environment variables.
@@ -15,21 +14,6 @@ const port = process.env.PORT || 8080;
 const minicrypt = require('./miniCrypt');
 
 const mc = new minicrypt();
-=======
-import * as _pgp from "pg-promise";
-import * as _express from "express";
-import { readFileSync } from "fs";
-const express = _express["default"];
-const pgp = _pgp["default"]({
-    connect(client) {
-        console.log('Connected to database:', client.connectionParameters.database);
-    },
-
-    disconnect(client) {
-        console.log('Disconnected from database:', client.connectionParameters.database);
-    }
-});
->>>>>>> main
 
 // Local PostgreSQL credentials
 const username = "postgres";
@@ -105,14 +89,14 @@ async function connectAndRun(task) {
     let connection = null;
 
     try {
-        connection = await db.connect().catch(err => console.log(err.stack));
-        return await task(connection).catch(err => console.log(err.stack));
+        connection = await db.connect();
+        return await task(connection);
     } catch (e) {
         throw e;
     } finally {
         try {
             connection.done();
-        } catch (ignored) {
+        } catch(ignored) {
 
         }
     }
@@ -120,7 +104,6 @@ async function connectAndRun(task) {
 
 async function getTradeHistory() {
     return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
-<<<<<<< HEAD
 }
 
 // user functions
@@ -187,19 +170,6 @@ app.get('/login',
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
     res.redirect('/login'); // back to login
-=======
-    //return JSON.parse(readFileSync("sample.json"));
-}
-
-async function registerUser(user, password) {
-    return await connectAndRun(db => db.none("INSERT INTO Accounts VALUES ($1, $2);", [user, password]));
-}
-
-const app = express();
-app.get("/tradeHistory", async (req, res) => {
-    const tradeList = await getTradeHistory().catch(err => console.log(err.stack));
-    res.send(JSON.stringify(tradeList));
->>>>>>> main
 });
 
 

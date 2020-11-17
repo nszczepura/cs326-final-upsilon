@@ -1,6 +1,5 @@
 {
     "name": "edgetrack",
-    "type": "module",
     "scripts": {
         "start": "node server/index.js",
         "lint": "eslint client/ server/"
@@ -40,6 +39,14 @@
     },
     "dependencies": {
         "express": "^4.17.1",
-        "pg-promise": "^10.7.3"
+        "pg-promise": "^10.7.3",
+        "bcrypt": "^5.0.0",
+        "bcryptjs": "^2.4.3",
+        "connect-ensure-login": "^0.1.1",
+        "dotenv": "^8.2.0",
+        "express-session": "^1.17.1",
+        "passport": "^0.4.1",
+        "passport-google-oauth": "^2.0.0",
+        "passport-local": "^1.0.0"
     }
 }

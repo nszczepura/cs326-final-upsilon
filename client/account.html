@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <script type="module" src="account.js" defer></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <title>ACCOUNT</title>
     </head>
@@ -41,17 +42,21 @@
             <label for="userID"><em>USER ID:</em></label>
             <input type="text" id="userID" name="user ID">
             <br><br>
-            <label for="exchange"><em>Exchange:</em></label>
+            <label for="userPW"><em>PASSWORD:</em></label>
+            <input type="text" id="userPW" name="password">
+            <br><br>
+            <!-- <label for="exchange"><em>Exchange:</em></label>
             <select id="exchange" name="Exchange">
                 <option value="appl">APPL</option>
                 <option value="amd">AMD</option>
             </select>
-            <br><br>
-            <label for="apiKey"><em>API KEY:</em></label>
+            <br><br> -->
+            <button type="button" class="btn btn-secondary" id="registerBtn">Register</button>
+            <!-- <label for="apiKey"><em>API KEY:</em></label>
             <input type="text" id="apiKey" name="API Key">
             <br><br>
             <label for="apiSecret"><em>API SECRET:</em></label>
-            <input type="text" id="apiSecret" name="API Secret">
+            <input type="text" id="apiSecret" name="API Secret"> -->
         </div>
 
     </body>

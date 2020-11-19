@@ -1,4 +1,20 @@
-console.log("Accessed main.js");
+function renderChart() {
+    const chartID = document.getElementById('portfolio').getContext('2d');
+    const chart = new Chart(chartID, {
+        type: 'line',
+
+        data: {
+            labels: ['test1', 'test2', 'test3', 'test4'],
+            datasets: [{
+                label: 'chart test',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5 ,2]
+            }]
+        },
+        options: {}
+    });
+}
 
 async function setObjective() {
     const response = await fetch('/tradeHistory')
@@ -38,3 +54,7 @@ async function setStats() {
 }
 
 setStats();
+
+window.addEventListener("load", async function() {
+    renderChart();
+});

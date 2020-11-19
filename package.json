@@ -1,6 +1,5 @@
 {
     "name": "edgetrack",
-    "type": "module",
     "scripts": {
         "start": "node server/index.js",
         "lint": "eslint client/ server/"

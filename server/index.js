@@ -149,10 +149,8 @@ function checkLoggedIn(req, res, next) {
 }
 
 app.get('/',
-    checkLoggedIn,
-    (req, res) => {
-        res.send("hello world");
-    });
+    (req, res) => res.sendFile('client/index.html',
+                    { 'root' : path.join(__dirname, '../client') }));
 
 // Handle post data from the login.html form.
 app.post('/login',

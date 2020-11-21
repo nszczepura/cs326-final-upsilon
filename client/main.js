@@ -4,15 +4,61 @@ function renderChart() {
         type: 'line',
 
         data: {
-            labels: ['test1', 'test2', 'test3', 'test4'],
+            labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
             datasets: [{
                 label: 'chart test',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5 ,2]
+                data: [0, 10, 5, 2, -5]
             }]
         },
         options: {}
+    });
+}
+
+function renderChart2(id) {
+    const chartID = document.getElementById(id).getContext('2d');
+    const chart = new Chart(chartID, {
+        type: 'bar',
+
+        data: {
+            labels: ["Chocolate", "Vanilla", "Strawberry", "Mint"],
+            datasets: [
+                
+                {
+                    label: "Green",
+                    backgroundColor: "green",
+                    data: [7, 2, 6,6]
+                },
+                {
+                    label: "Red",
+                    backgroundColor: "red",
+                    data: [4, 3, 5,3]
+                }
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    display: false,
+                    barPercentage: 1.3,
+                    ticks: {
+                        max: 3,
+                    }
+                }, {
+                    display: true,
+                    ticks: {
+                        autoSkip: false,
+                        max: 4,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
     });
 }
 
@@ -24,7 +70,7 @@ async function setObjective() {
     if (response.ok) {
         const someJSON = await response.json();
         const docIds = ["starting-capital", "monthly-addition", "percent-gain", "compounded"];
-        for(let i = 0; i < 4; ++i){
+        for (let i = 0; i < 4; ++i) {
             const ele = document.getElementById(docIds[i]);
             ele.innerText = someJSON[i].quantity;
         }
@@ -43,8 +89,8 @@ async function setStats() {
         });
     if (response.ok) {
         const someJSON = await response.json();
-        for(let i = 0; i < 12; ++i){
-            const ele = document.getElementById(""+i);
+        for (let i = 0; i < 12; ++i) {
+            const ele = document.getElementById("" + i);
             ele.innerText = someJSON[i].quantity;
         }
     } else {
@@ -55,6 +101,10 @@ async function setStats() {
 
 setStats();
 
-window.addEventListener("load", async function() {
+window.addEventListener("load", async function () {
     renderChart();
+    renderChart2('p1');
+    renderChart2('p2');
+    renderChart2('p3');
+    renderChart2('p4');
 });

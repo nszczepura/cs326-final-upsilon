@@ -148,9 +148,38 @@ function checkLoggedIn(req, res, next) {
     }
 }
 
-app.get('/',
-    (req, res) => res.sendFile('client/index.html',
-                    { 'root' : path.join(__dirname, '../client') }));
+async function bitmexWalletHistory(apiKey, apiSecret) {
+    const request = require('request');
+    const crypto = require('crypto');
+
+    const verb = 'GET';
+    const path = '/api/v1/user/walletHistory';
+    const expires = Math.round(new Date().getTime() / 1000) + 60; // 1 min in the future
+
+    const signature = crypto.createHmac('sha256', apiSecret)
+      .update(verb + path + expires)
+      .digest('hex');
+
+    const headers = {
+      'content-type' : 'application/json',
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'api-expires': expires,
+      'api-key': apiKey,
+      'api-signature': signature
+    };
+
+    const requestOptions = {
+      headers: headers,
+      url: 'https://bitmex.com' + path,
+      method: verb
+    };
+
+    request(requestOptions, function(error, response, body) {
+      if (error) { console.log(error); }
+      console.log(body);
+    });
+}
 
 // Handle post data from the login.html form.
 app.post('/login',
@@ -227,3 +256,6 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
+
+//test log
+bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');

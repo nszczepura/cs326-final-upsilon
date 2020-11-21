@@ -1,15 +1,34 @@
-function renderChart() {
+async function renderChart() {
+    const labels = [];
+    const data = [];
+    const response = await fetch('/walletHistory')
+        .catch(function (error) {
+            alert(error);
+        });
+    if (response.ok) {
+        const someJSON = await response.json();
+        // console.log(someJSON);
+        for(let i = 0; i < someJSON.length; ++i){
+            labels.push("" + i);
+            data.push(someJSON[i]['walletbalance']);
+        }
+    console.log(data);
+    } else {
+        console.error("Could not retrieve the wallet from the server.");
+    }
     const chartID = document.getElementById('portfolio').getContext('2d');
     const chart = new Chart(chartID, {
         type: 'line',
 
         data: {
-            labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
+            labels: labels,
+            // labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
             datasets: [{
                 label: 'chart test',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, -5]
+                // data: [0, 10, 5, 2, -5]
+                data: data
             }]
         },
         options: {}
@@ -24,16 +43,16 @@ function renderChart2(id) {
         data: {
             labels: ["Chocolate", "Vanilla", "Strawberry", "Mint"],
             datasets: [
-                
+
                 {
                     label: "Green",
                     backgroundColor: "green",
-                    data: [7, 2, 6,6]
+                    data: [7, 2, 6, 6]
                 },
                 {
                     label: "Red",
                     backgroundColor: "red",
-                    data: [4, 3, 5,3]
+                    data: [4, 3, 5, 3]
                 }
             ]
         },

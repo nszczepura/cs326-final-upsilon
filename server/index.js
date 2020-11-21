@@ -107,6 +107,10 @@ async function getTradeHistory() {
     return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
 }
 
+async function getWalletHistory() {
+    return await connectAndRun(db => db.any("SELECT * FROM wallethistory;"));
+}
+
 // user functions
 
 // Returns true iff the user exists.
@@ -250,6 +254,11 @@ app.get('/private/:userID/',
 app.get("/tradeHistory", async (req, res) => {
     const tradeList = await getTradeHistory();
     res.send(JSON.stringify(tradeList));
+});
+
+app.get("/walletHistory", async (req, res) => {
+    const wallet = await getWalletHistory();
+    res.send(JSON.stringify(wallet));
 });
 
 app.use(express.static('client'));

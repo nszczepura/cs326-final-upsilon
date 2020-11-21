@@ -8,11 +8,11 @@ async function renderChart() {
     if (response.ok) {
         const someJSON = await response.json();
         // console.log(someJSON);
-        for(let i = 0; i < someJSON.length; ++i){
+        for (let i = 0; i < someJSON.length; ++i) {
             labels.push("" + i);
             data.push(someJSON[i]['walletbalance']);
         }
-    console.log(data);
+        console.log(data);
     } else {
         console.error("Could not retrieve the wallet from the server.");
     }
@@ -81,6 +81,28 @@ function renderChart2(id) {
     });
 }
 
+function renderPie() {
+    const chartID = document.getElementById('pie').getContext('2d');
+    const chart = new Chart(chartID, {
+        type: 'pie',
+
+        data: {
+            labels: ['SPDR S&P 500 ETF Trust', 'Tesla Inc', 'Apple Inc', 'Ford Motor Company', 'Clear Channel Outdoor Holdings Inc'],
+            datasets: [{
+                label: 'pie test',
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                // borderColor: 'rgb(255, 99, 132)',
+                data: [15, 5, 4, 3, 2]
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    });
+}
+
 async function setObjective() {
     const response = await fetch('/tradeHistory')
         .catch(function (error) {
@@ -126,4 +148,5 @@ window.addEventListener("load", async function () {
     renderChart2('p2');
     renderChart2('p3');
     renderChart2('p4');
+    renderPie();
 });

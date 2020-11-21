@@ -16,6 +16,34 @@ function renderChart() {
     });
 }
 
+function renderChart2() {
+    const chartID = document.getElementById('portfoliof').getContext('2d');
+    const chart = new Chart(chartID, {
+        type: 'bar',
+
+        data: {
+            labels: ['test1', 'test2', 'test3', 'test4'],
+            datasets: [{
+                label: 'chart test',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [6, 7, 5 , 4]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 8,
+                        min: 0,
+                        stepSize: 0.5
+                    }
+                }]
+            }
+        }
+    });
+}
+
 async function setObjective() {
     const response = await fetch('/tradeHistory')
         .catch(function (error) {
@@ -57,4 +85,5 @@ setStats();
 
 window.addEventListener("load", async function() {
     renderChart();
+    renderChart2();
 });

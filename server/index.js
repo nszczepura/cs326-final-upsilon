@@ -3,6 +3,8 @@
 // For loading environment variables.
 require('dotenv').config();
 
+const request = require('request');
+const crypto = require('crypto');
 const pgPromise = require('pg-promise');
 const pgp = pgPromise({});
 const express = require('express');                 // express routing
@@ -28,7 +30,6 @@ const session = {
 };
 
 //postgres db configuration
-
 const url = process.env.DATABASE_URL || `postgres://${username}:${password}@localhost/`;
 const db = pgp(url);
 
@@ -149,8 +150,6 @@ function checkLoggedIn(req, res, next) {
 }
 
 async function bitmexWalletHistory(apiKey, apiSecret) {
-    const request = require('request');
-    const crypto = require('crypto');
 
     const verb = 'GET';
     const path = '/api/v1/user/walletHistory';
@@ -175,10 +174,16 @@ async function bitmexWalletHistory(apiKey, apiSecret) {
       method: verb
     };
 
-    request(requestOptions, function(error, response, body) {
-      if (error) { console.log(error); }
-      console.log(body);
-    });
+    return new Promise(function(resolve, reject) {
+      request(requestOptions, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          resolve(body);
+        }
+        else {
+          reject(error);
+        }
+      });
+  });
 }
 
 // Handle post data from the login.html form.
@@ -257,5 +262,22 @@ app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
 
-//test log
-bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
+
+async function insertWallet(wbalance, amount, account) {
+  console.log(wbalance, amount, account);
+  return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3);", [wbalance, amount, account]));
+}
+
+async function get_data(){
+  //test log
+  const account = 'testuser';
+  let test = await bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
+  let test_json = JSON.parse(test);
+  for(let i = 0; i < test_json.length; i++){
+    let wbalance = test_json[i]['walletBalance'];
+    let amount = test_json[i]['amount'];
+    await insertWallet(wbalance, amount, account);
+  }
+}
+
+get_data();

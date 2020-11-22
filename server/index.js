@@ -141,7 +141,7 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-function addUser(name, pwd) {
+function addUser(name, pwd, apikey, apisecret) {
     if (findUser(name)) {
     return false;
     }
@@ -308,5 +308,13 @@ async function get_data(){
 //   }
 }
 
+async function insertUser(user, pwd, apikey, apisecret) {
+  console.log(user, pwd, apikey, apisecret);
+  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3, $4, $5);", [user, salt, hash, apikey, apisecret]));
+}
 
-get_data();
+async function getUserInfo(user) {
+    return await connectAndRun(db => db.any("SELECT * FROM users where user = $1", [user]));
+}
+
+getUserInfo('testuser');

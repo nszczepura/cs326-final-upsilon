@@ -43,10 +43,9 @@ async function renderChart2(id, resource, labels) {
         });
     if (response.ok) {
         const someJSON = await response.json();
-        // console.log(someJSON);
-        for (let i = 0; i < someJSON.length; ++i) {
-            data.push(someJSON[i]['count']);
-        }
+        console.log(someJSON);
+        data.push(someJSON[0]['first']);
+        data.push(someJSON[0]['second']);
         console.log(data);
     } else {
         console.error("Could not retrieve the wallet from the server.");
@@ -163,7 +162,7 @@ setStats();
 window.addEventListener("load", async function () {
     renderChart();
     renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
-    renderChart2('p2', 'winLoss', ['Total Gained', 'Total Lost']);
+    renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
     renderChart2('p3', 'winLoss', ['Best', 'Worst']);
     renderChart2('p4', 'winLoss', ['Something', 'IDK']);
     renderPie();

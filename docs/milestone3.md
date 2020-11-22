@@ -1,4 +1,6 @@
-                       Table "public.trades"
+
+```
+                        Table "public.trades"
   Column  |         Type          | Description
 ----------+-----------------------+-----------------------------
  pair     | character varying(50) |          
@@ -9,6 +11,7 @@
  pnl      | double precision      |         
  class    | character varying(50) |        
  date     | date                  |           
+
 
                         Table "public.users"
   Column   |          Type          | Description
@@ -27,4 +30,4 @@
  walletbalance | integer               |        
  amount        | integer               |          
  account       | character varying(50) |          
-
+```

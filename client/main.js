@@ -35,24 +35,41 @@ async function renderChart() {
     });
 }
 
-function renderChart2(id) {
+async function renderChart2(id) {
+    const labels = [];
+    const data = [];
+    const response = await fetch('/winLoss')
+        .catch(function (error) {
+            alert(error);
+        });
+    if (response.ok) {
+        const someJSON = await response.json();
+        // console.log(someJSON);
+        for (let i = 0; i < someJSON.length; ++i) {
+            labels.push("" + i);
+            data.push(someJSON[i]['count']);
+        }
+        console.log(data);
+    } else {
+        console.error("Could not retrieve the wallet from the server.");
+    }
     const chartID = document.getElementById(id).getContext('2d');
     const chart = new Chart(chartID, {
         type: 'bar',
 
         data: {
-            labels: ["Chocolate", "Vanilla", "Strawberry", "Mint"],
+            labels: [""],
             datasets: [
 
                 {
-                    label: "Green",
+                    label: "Wins",
                     backgroundColor: "green",
-                    data: [7, 2, 6, 6]
+                    data: [data[0]]
                 },
                 {
-                    label: "Red",
+                    label: "Losses",
                     backgroundColor: "red",
-                    data: [4, 3, 5, 3]
+                    data: [data[1]]
                 }
             ]
         },
@@ -60,7 +77,7 @@ function renderChart2(id) {
             scales: {
                 xAxes: [{
                     display: false,
-                    barPercentage: 1.3,
+                    barPercentage: 1,
                     ticks: {
                         max: 3,
                     }
@@ -76,6 +93,9 @@ function renderChart2(id) {
                         beginAtZero: true
                     }
                 }]
+            },
+            legend: {
+                display: false
             }
         }
     });

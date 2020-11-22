@@ -112,12 +112,23 @@ async function getWalletHistory() {
 }
 
 async function getWinLossCounts() {
-    return await connectAndRun(db => db.any("SELECT (SELECT COUNT(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT COUNT(-pnl) FROM trades WHERE pnl < 0) AS second;"));
+    return await connectAndRun(db => db.any(
+        "SELECT (SELECT COUNT(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT COUNT(-pnl) FROM trades WHERE pnl < 0) AS second;"));
 }
 
 async function getGainsLosses() {
     return await connectAndRun(db => db.any(
         "SELECT (SELECT SUM(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
+}
+
+async function getAvgGainLoss() {
+    return await connectAndRun(db => db.any(
+        "SELECT (SELECT AVG(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT AVG(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
+}
+
+async function getBestGainWorstLoss() {
+    return await connectAndRun(db => db.any(
+        "SELECT (SELECT MAX(pnl * 10000) FROM trades) AS first, (SELECT MAX(-pnl * 10000) FROM trades) AS second;"));
 }
 
 // user functions
@@ -277,6 +288,16 @@ app.get("/winLoss", async (req, res) => {
 
 app.get("/gainsLosses", async (req, res) => {
     const counts = await getGainsLosses();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/avgGainLoss", async (req, res) => {
+    const counts = await getAvgGainLoss();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/bestGainWorstLoss", async (req, res) => {
+    const counts = await getBestGainWorstLoss();
     res.send(JSON.stringify(counts));
 });
 

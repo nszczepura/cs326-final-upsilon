@@ -112,7 +112,12 @@ async function getWalletHistory() {
 }
 
 async function getWinLossCounts() {
-    return await connectAndRun(db => db.any("(select count(pnl) from trades where pnl > 0) UNION (select count(pnl) from trades where pnl < 0)"));
+    return await connectAndRun(db => db.any("SELECT (SELECT COUNT(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT COUNT(-pnl) FROM trades WHERE pnl < 0) AS second;"));
+}
+
+async function getGainsLosses() {
+    return await connectAndRun(db => db.any(
+        "SELECT (SELECT SUM(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
 }
 
 // user functions
@@ -270,6 +275,11 @@ app.get("/winLoss", async (req, res) => {
     res.send(JSON.stringify(counts));
 });
 
+app.get("/gainsLosses", async (req, res) => {
+    const counts = await getGainsLosses();
+    res.send(JSON.stringify(counts));
+});
+
 app.use(express.static('client'));
 
 app.get('*', (req, res) => {
@@ -297,4 +307,5 @@ async function get_data(){
 //     await insertWallet(wbalance, amount, account);
 //   }
 }
+
 get_data();

@@ -35,20 +35,17 @@ async function renderChart() {
     });
 }
 
-async function renderChart2(id) {
-    const labels = [];
+async function renderChart2(id, resource, labels) {
     const data = [];
-    const response = await fetch('/winLoss')
+    const response = await fetch(`/${resource}`)
         .catch(function (error) {
             alert(error);
         });
     if (response.ok) {
         const someJSON = await response.json();
-        // console.log(someJSON);
-        for (let i = 0; i < someJSON.length; ++i) {
-            labels.push("" + i);
-            data.push(someJSON[i]['count']);
-        }
+        console.log(someJSON);
+        data.push(someJSON[0]['first']);
+        data.push(someJSON[0]['second']);
         console.log(data);
     } else {
         console.error("Could not retrieve the wallet from the server.");
@@ -62,12 +59,12 @@ async function renderChart2(id) {
             datasets: [
 
                 {
-                    label: "Wins",
+                    label: labels[0],
                     backgroundColor: "green",
                     data: [data[0]]
                 },
                 {
-                    label: "Losses",
+                    label: labels[1],
                     backgroundColor: "red",
                     data: [data[1]]
                 }
@@ -164,9 +161,9 @@ setStats();
 
 window.addEventListener("load", async function () {
     renderChart();
-    renderChart2('p1');
-    renderChart2('p2');
-    renderChart2('p3');
-    renderChart2('p4');
+    renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
+    renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
+    renderChart2('p3', 'winLoss', ['Best', 'Worst']);
+    renderChart2('p4', 'winLoss', ['Something', 'IDK']);
     renderPie();
 });

@@ -297,5 +297,4 @@ async function get_data(){
 //     await insertWallet(wbalance, amount, account);
 //   }
 }
-
 get_data();

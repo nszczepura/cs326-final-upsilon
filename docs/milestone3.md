@@ -34,7 +34,11 @@
 ```
 
 Division of Labor:
+
 Eliezer created the register page linked in account page.
+
 Kevin hooked up the main page charts to receive data from postgres via api requests and made an objective input skeleton.
+
 Nicholas set up api to access bitmex wallet history, updated the postgress database, troubleshooted heroku bs.
+
 All three (3) working together in Zoom meeting.

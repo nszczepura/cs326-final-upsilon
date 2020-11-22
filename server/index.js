@@ -73,8 +73,6 @@ passport.deserializeUser((uid, done) => {
 app.use(express.json()); // allow JSON inputs
 app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
-let userMap = {};
-
 // database functions
 
 async function connectAndRun(task) {
@@ -205,7 +203,7 @@ async function bitmexWalletHistory(apiKey, apiSecret) {
 
     return new Promise(function(resolve, reject) {
       request(requestOptions, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           resolve(body);
         }
         else {

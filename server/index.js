@@ -77,12 +77,10 @@ app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
 // temp in-memory "database"
 // let users = { 'upsilon' : 'compsci326' } // default user
-let users = { 'upsilon' : [
+const users = { 'upsilon' : [
   '2401f90940e037305f71ffa15275fb0d',
   '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
 ] };
-
-let userMap = {};
 
 // database functions
 
@@ -200,7 +198,7 @@ async function bitmexWalletHistory(apiKey, apiSecret) {
 
     return new Promise(function(resolve, reject) {
       request(requestOptions, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           resolve(body);
         }
         else {

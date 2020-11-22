@@ -7,12 +7,10 @@ async function renderChart() {
         });
     if (response.ok) {
         const someJSON = await response.json();
-        // console.log(someJSON);
         for (let i = 0; i < someJSON.length; ++i) {
             labels.push("" + i);
             data.push(someJSON[i]['walletbalance']);
         }
-        console.log(data);
     } else {
         console.error("Could not retrieve the wallet from the server.");
     }
@@ -22,16 +20,18 @@ async function renderChart() {
 
         data: {
             labels: labels,
-            // labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
             datasets: [{
                 label: 'chart test',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                // data: [0, 10, 5, 2, -5]
                 data: data
             }]
         },
-        options: {}
+        options: {
+            legend: {
+                display: false
+            }
+        }
     });
 }
 
@@ -43,10 +43,8 @@ async function renderChart2(id, resource, labels) {
         });
     if (response.ok) {
         const someJSON = await response.json();
-        console.log(someJSON);
         data.push(someJSON[0]['first']);
         data.push(someJSON[0]['second']);
-        console.log(data);
     } else {
         console.error("Could not retrieve the wallet from the server.");
     }
@@ -108,7 +106,6 @@ function renderPie() {
             datasets: [{
                 label: 'pie test',
                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                // borderColor: 'rgb(255, 99, 132)',
                 data: [15, 5, 4, 3, 2]
             }]
         },
@@ -121,20 +118,24 @@ function renderPie() {
 }
 
 async function setStats() {
+    const data = [];
     const response = await fetch('/tradeHistory')
         .catch(function (error) {
             alert(error);
         });
     if (response.ok) {
         const someJSON = await response.json();
-        for (let i = 0; i < 12; ++i) {
-            const ele = document.getElementById("" + i);
-            ele.innerText = someJSON[i].quantity;
+        for(const i in someJSON){
+            data.push(someJSON[i]);
         }
     } else {
         console.error("Could not retrieve the trades from the server.");
     }
-
+    console.log(data[0]);
+    let pnlTotal = 0;
+    data.forEach(a => pnlTotal += a['pnl'] * 10000);
+    document.getElementById("" + 11).innerText = pnlTotal;
+    console.log(pnlTotal);
 }
 
 setStats();

@@ -108,17 +108,32 @@
                 <div class="row d-flex justify-content-center">
                     Objective
                 </div>
-                <div class="row">
-                    <p>Starting capital:  <div id="starting-capital"></div></p>
+                <div class="row form-group mx-sm-3 mb-2">
+                    <p>Starting capital:  </p><input type="text" class="form-control" id="starting-capital"/>
                 </div>
-                <div class="row">
-                    <p>Monthly Addition:   <div id="monthly-addition"></div></p>
+                <div class="row form-group mx-sm-3 mb-2">
+                    <p>Contribution Frequency:  </p>
+                    <select class="form-control" id="compounded">
+                        <option value="monthly">Monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="daily">Daily</option>
+                        
+                    </select>
                 </div>
-                <div class="row">
-                    <p>% Gain:   <div id="percent-gain"></div></p>
+                <div class="row form-group mx-sm-3 mb-2">
+                    <p>Contribution:   </p><input type="text" class="form-control" id="contribution"/>
                 </div>
-                <div class="row">
-                    <p>Compounded:  <div id="compounded"></div></p>
+                <div class="row form-group mx-sm-3 mb-2">
+                    <p>Estimated Gain Percentage:   </p><input type="text" class="form-control" id="percent-gain"/>
+                </div>
+                <div class="row form-group mx-sm-3 mb-2">
+                    <p>Compound Frequency:  </p>
+                    <select class="form-control" id="compounded">
+                        <option value="annually">Annually</option>
+                        <option value="semiannually">Semiannually</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="daily">Daily</option>
+                    </select>
                 </div>
             </div>
             <div class="col-3 pr-5 pl-5 border-right">

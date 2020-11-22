@@ -121,6 +121,7 @@ async function getUserInfo(user) {
 
 async function userExists(user) {
   return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", [user]));
+}
 
 async function getAvgGainLoss() {
     return await connectAndRun(db => db.any(

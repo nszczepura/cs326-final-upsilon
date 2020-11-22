@@ -163,7 +163,7 @@ window.addEventListener("load", async function () {
     renderChart();
     renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
     renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
-    renderChart2('p3', 'winLoss', ['Best', 'Worst']);
-    renderChart2('p4', 'winLoss', ['Something', 'IDK']);
+    renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
+    renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
     renderPie();
 });

@@ -111,6 +111,10 @@ async function getWalletHistory() {
     return await connectAndRun(db => db.any("SELECT * FROM wallethistory;"));
 }
 
+async function getWinLossCounts() {
+    return await connectAndRun(db => db.any("(select count(pnl) from trades where pnl > 0) UNION (select count(pnl) from trades where pnl < 0)"));
+}
+
 // user functions
 
 // Returns true iff the user exists.
@@ -261,6 +265,11 @@ app.get("/walletHistory", async (req, res) => {
     res.send(JSON.stringify(wallet));
 });
 
+app.get("/winLoss", async (req, res) => {
+    const counts = await getWinLossCounts();
+    res.send(JSON.stringify(counts));
+});
+
 app.use(express.static('client'));
 
 app.get('*', (req, res) => {
@@ -282,11 +291,11 @@ async function get_data(){
   const account = 'testuser';
   let test = await bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
   let test_json = JSON.parse(test);
-  for(let i = 0; i < test_json.length; i++){
-    let wbalance = test_json[i]['walletBalance'];
-    let amount = test_json[i]['amount'];
-    await insertWallet(wbalance, amount, account);
-  }
+//   for(let i = 0; i < test_json.length; i++){
+//     let wbalance = test_json[i]['walletBalance'];
+//     let amount = test_json[i]['amount'];
+//     await insertWallet(wbalance, amount, account);
+//   }
 }
 
 get_data();

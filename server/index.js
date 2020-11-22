@@ -73,15 +73,6 @@ passport.deserializeUser((uid, done) => {
 app.use(express.json()); // allow JSON inputs
 app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
 
-/////
-
-// temp in-memory "database"
-// let users = { 'upsilon' : 'compsci326' } // default user
-let users = { 'upsilon' : [
-  '2401f90940e037305f71ffa15275fb0d',
-  '61236629f33285cbc73dc563cfc49e96a00396dc9e3a220d7cd5aad0fa2f3827d03d41d55cb2834042119e5f495fc3dc8ba3073429dd5a5a1430888e0d115250'
-] };
-
 let userMap = {};
 
 // database functions
@@ -120,11 +111,24 @@ async function getGainsLosses() {
         "SELECT (SELECT SUM(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
 }
 
+async function insertUser(user, pwd, apikey, apisecret) {
+  console.log(user, pwd, apikey, apisecret);
+  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3, $4, $5);", [user, salt, hash, apikey, apisecret]));
+}
+
+async function getUserInfo(user) {
+    return await connectAndRun(db => db.any("SELECT * FROM users where username = $1", [user]));
+}
+
+async function userExists(user) {
+  return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", [user]));
+}
+
 // user functions
 
 // Returns true iff the user exists.
 function findUser(username) {
-    if (!users[username]) {
+    if (userExists(username) !== null) {
     return false;
     } else {
     return true;
@@ -136,7 +140,8 @@ function validatePassword(name, pwd) {
     if (!findUser(name)) {
     return false;
     }
-    const res = mc.check(pwd, users[name][0], users[name][1]);
+    const userin = getUserInfo(name);
+    const res = mc.check(pwd, userin['salt'], userin['hash']);
     return res;
 }
 
@@ -146,7 +151,7 @@ function addUser(name, pwd, apikey, apisecret) {
     return false;
     }
     const [salt, hash] = mc.hash(pwd);
-    users[name] = [salt, hash];
+    insertUser(name, pwd, apikey, apisecret);
     return true;
 }
 
@@ -307,14 +312,3 @@ async function get_data(){
 //     await insertWallet(wbalance, amount, account);
 //   }
 }
-
-async function insertUser(user, pwd, apikey, apisecret) {
-  console.log(user, pwd, apikey, apisecret);
-  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3, $4, $5);", [user, salt, hash, apikey, apisecret]));
-}
-
-async function getUserInfo(user) {
-    return await connectAndRun(db => db.any("SELECT * FROM users where user = $1", [user]));
-}
-
-getUserInfo('testuser');

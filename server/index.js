@@ -112,7 +112,7 @@ async function getGainsLosses() {
 
 async function insertUser(user, pwd, apikey, apisecret) {
   console.log(user, pwd, apikey, apisecret);
-  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3, $4, $5);", [user, salt, hash, apikey, apisecret]));
+  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3);", [user, salt, hash]));
 }
 
 async function getUserInfo(user) {
@@ -156,12 +156,12 @@ function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-function addUser(name, pwd, apikey, apisecret) {
+function addUser(name, pwd) {
     if (findUser(name)) {
     return false;
     }
     const [salt, hash] = mc.hash(pwd);
-    insertUser(name, pwd, apikey, apisecret);
+    insertUser(name, pwd);
     return true;
 }
 
@@ -241,6 +241,8 @@ app.post('/register',
      (req, res) => {
          const username = req.body['username'];
          const password = req.body['password'];
+         const apikey = req.body['apikey'];
+         const apisecret = req.body['apisecret'];
          if (addUser(username, password)) {
          res.redirect('/login');
          } else {
@@ -325,13 +327,12 @@ async function get_data(){
   //test log
   const account = 'testuser';
   let test = await bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
-  let test_json = JSON.parse(test);
-  for(let i = 0; i < test_json.length; i++){
-    console.log(test_json[i]);
-  }
+  console.log(test)
 //   for(let i = 0; i < test_json.length; i++){
 //     let wbalance = test_json[i]['walletBalance'];
 //     let amount = test_json[i]['amount'];
 //     await insertWallet(wbalance, amount, account);
 //   }
 }
+
+get_data();

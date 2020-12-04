@@ -96,27 +96,6 @@ async function renderChart2(id, resource, labels) {
     });
 }
 
-function renderPie() {
-    const chartID = document.getElementById('pie').getContext('2d');
-    const chart = new Chart(chartID, {
-        type: 'pie',
-
-        data: {
-            labels: ['SPDR S&P 500 ETF Trust', 'Tesla Inc', 'Apple Inc', 'Ford Motor Company', 'Clear Channel Outdoor Holdings Inc'],
-            datasets: [{
-                label: 'pie test',
-                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                data: [15, 5, 4, 3, 2]
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            }
-        }
-    });
-}
-
 async function setStats() {
     const data = [];
     const response = await fetch('/tradeHistory')
@@ -146,5 +125,4 @@ window.addEventListener("load", async function () {
     renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
     renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
     renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
-    renderPie();
 });

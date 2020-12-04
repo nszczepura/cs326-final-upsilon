@@ -107,7 +107,7 @@ async function getWinLossCounts() {
 
 async function getGainsLosses() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT SUM(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
+        "SELECT (SELECT SUM(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl) FROM trades WHERE pnl < 0) AS second;"));
 }
 
 async function insertUser(user, pwd, apikey, apisecret) {
@@ -125,12 +125,12 @@ async function userExists(user) {
 
 async function getAvgGainLoss() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT AVG(pnl * 10000) FROM trades WHERE pnl > 0) AS first, (SELECT AVG(-pnl * 10000) FROM trades WHERE pnl < 0) AS second;"));
+        "SELECT (SELECT AVG(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT AVG(-pnl) FROM trades WHERE pnl < 0) AS second;"));
 }
 
 async function getBestGainWorstLoss() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT MAX(pnl * 10000) FROM trades) AS first, (SELECT MAX(-pnl * 10000) FROM trades) AS second;"));
+        "SELECT (SELECT MAX(pnl) FROM trades) AS first, (SELECT MAX(-pnl) FROM trades) AS second;"));
 
 }
 
@@ -326,6 +326,9 @@ async function get_data(){
   const account = 'testuser';
   let test = await bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
   let test_json = JSON.parse(test);
+  for(let i = 0; i < test_json.length; i++){
+    console.log(test_json[i]);
+  }
 //   for(let i = 0; i < test_json.length; i++){
 //     let wbalance = test_json[i]['walletBalance'];
 //     let amount = test_json[i]['amount'];

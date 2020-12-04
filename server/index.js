@@ -206,10 +206,8 @@ app.get('/logout', (req, res) => {
 // Use res.redirect to change URLs.
 app.post('/register',
      (req, res) => {
-         const username = req.body['username'];
-         const password = req.body['password'];
-         const apikey = req.body['apikey'];
-         const apisecret = req.body['apisecret'];
+         const username = req.body['userID'];
+         const password = req.body['userPW'];
          if (addUser(username, password)) {
          res.redirect('/login');
          } else {

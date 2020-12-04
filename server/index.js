@@ -177,26 +177,26 @@ function checkLoggedIn(req, res, next) {
     next();
     } else {
     // Otherwise, redirect to the login page.
-    res.redirect('/login');
+    res.redirect('/account');
     }
 }
 
-// Handle post data from the login.html form.
-app.post('/login',
+// Handle post data from the account.html form.
+app.post('/account',
      passport.authenticate('local' , {     // use username/password authentication
          'successRedirect' : '/private',   // when we login, go to /private 
-         'failureRedirect' : '/login'      // otherwise, back to login
+         'failureRedirect' : '/account'      // otherwise, back to login
      }));
 
 // Handle the URL /login (just output the login.html file).
-app.get('/login',
-    (req, res) => res.sendFile('html/login.html',
+app.get('/account',
+    (req, res) => res.sendFile('/../html/account.html',
                    { 'root' : __dirname }));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
-    res.redirect('/login'); // back to login
+    res.redirect('/account'); // back to login
 });
 
 
@@ -206,18 +206,18 @@ app.get('/logout', (req, res) => {
 // Use res.redirect to change URLs.
 app.post('/register',
      (req, res) => {
-         const username = req.body['userID'];
-         const password = req.body['userPW'];
+         const username = req.body['username'];
+         const password = req.body['password'];
          if (addUser(username, password)) {
-         res.redirect('/login');
+         res.redirect('/../html/account.html');
          } else {
-         res.redirect('/register');
+         res.redirect('/../html/register.html');
          }
      });
 
 // Register URL
 app.get('/register',
-    (req, res) => res.sendFile('html/register.html',
+    (req, res) => res.sendFile('/../html/register.html',
                    { 'root' : __dirname }));
 
 // Private data

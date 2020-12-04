@@ -92,6 +92,11 @@ async function connectAndRun(task) {
     }
 }
 
+async function insertWallet(wbalance, amount, account) {
+  console.log(wbalance, amount, account);
+  return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, userid]));
+}
+
 async function getTradeHistory() {
     return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
 }
@@ -110,8 +115,7 @@ async function getGainsLosses() {
         "SELECT (SELECT SUM(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl) FROM trades WHERE pnl < 0) AS second;"));
 }
 
-async function insertUser(user, pwd, apikey, apisecret) {
-  console.log(user, pwd, apikey, apisecret);
+async function insertUser(user, pwd) {
   return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3);", [user, salt, hash]));
 }
 
@@ -225,6 +229,7 @@ app.get('/private',
         res.redirect('/private/' + req.user);
     });
 
+//
 // A dummy page for the user.
 app.get('/private/:userID/',
     checkLoggedIn, // We also protect this route: authenticated...
@@ -279,9 +284,3 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);
 });
-
-
-async function insertWallet(wbalance, amount, account) {
-  console.log(wbalance, amount, account);
-  return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3);", [wbalance, amount, account]));
-}

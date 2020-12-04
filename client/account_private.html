@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <script type="module" src="account.js" defer></script>
+        <script type="module" src="account_private.js" defer></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <title>MY ACCOUNT</title>
     </head>
@@ -44,7 +44,7 @@
             <h4>Upload a csv of your trade history to get started</h4>
             <p>Format: (transactTime, transactType, amount, fee, address, transactStatus, walletBallance)</p>
             <label for="csvFileInput"><em>CSV History: </em></label>
-            <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
+            <input type="file" id="csvFile" accept=".csv">
         </div>
 
     </body>

@@ -115,7 +115,7 @@ async function getGainsLosses() {
         "SELECT (SELECT SUM(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl) FROM trades WHERE pnl < 0) AS second;"));
 }
 
-async function insertUser(user, pwd) {
+async function insertUser(user, salt, hash) {
   return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3);", [user, salt, hash]));
 }
 
@@ -165,7 +165,7 @@ function addUser(name, pwd) {
     return false;
     }
     const [salt, hash] = mc.hash(pwd);
-    insertUser(name, pwd);
+    insertUser(name, [salt, hash][0], [salt, hash][1]);
     return true;
 }
 

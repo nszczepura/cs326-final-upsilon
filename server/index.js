@@ -177,43 +177,6 @@ function checkLoggedIn(req, res, next) {
     }
 }
 
-async function bitmexWalletHistory(apiKey, apiSecret) {
-
-    const verb = 'GET';
-    const path = '/api/v1/user/walletHistory';
-    const expires = Math.round(new Date().getTime() / 1000) + 60; // 1 min in the future
-
-    const signature = crypto.createHmac('sha256', apiSecret)
-      .update(verb + path + expires)
-      .digest('hex');
-
-    const headers = {
-      'content-type' : 'application/json',
-      'Accept': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      'api-expires': expires,
-      'api-key': apiKey,
-      'api-signature': signature
-    };
-
-    const requestOptions = {
-      headers: headers,
-      url: 'https://bitmex.com' + path,
-      method: verb
-    };
-
-    return new Promise(function(resolve, reject) {
-      request(requestOptions, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-          resolve(body);
-        }
-        else {
-          reject(error);
-        }
-      });
-  });
-}
-
 // Handle post data from the login.html form.
 app.post('/login',
      passport.authenticate('local' , {     // use username/password authentication
@@ -322,17 +285,3 @@ async function insertWallet(wbalance, amount, account) {
   console.log(wbalance, amount, account);
   return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3);", [wbalance, amount, account]));
 }
-
-async function get_data(){
-  //test log
-  const account = 'testuser';
-  let test = await bitmexWalletHistory('gdza2Kt5rl0dONExkC8vGGS8', 'VUANpNaXhGxpRlOjMhdQN0c5g994LyMTrQZ8nozjVGsbQBMs');
-  console.log(test)
-//   for(let i = 0; i < test_json.length; i++){
-//     let wbalance = test_json[i]['walletBalance'];
-//     let amount = test_json[i]['amount'];
-//     await insertWallet(wbalance, amount, account);
-//   }
-}
-
-get_data();

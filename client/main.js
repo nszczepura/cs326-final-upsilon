@@ -1,4 +1,4 @@
-async function renderChart(obj) {
+async function renderChart(obj, walletid) {
     const labels = [];
     const data = [];
     const response = await fetch('/walletHistory')
@@ -9,7 +9,7 @@ async function renderChart(obj) {
         const someJSON = await response.json();
         for (let i = 0; i < someJSON.length; ++i) {
             labels.push("" + i);
-            if(someJSON[i]['walletid'] === 'test'){
+            if(someJSON[i]['walletid'] === walletid){
                 data.push(someJSON[i]['walletbalance']);
             }
         }
@@ -141,9 +141,14 @@ window.addEventListener("load", async function () {
     const start_cap = document.getElementById('starting-capital').defaultValue = 500000;
     const gain = document.getElementById('percent-gain').defaultValue = 2;
     const steps = document.getElementById('number-of-trades').defaultValue = 37;
-    renderChart(chart_objective());
+    document.getElementById('walletid').defaultValue = 'test';
+    renderChart(chart_objective(), 'test');
     renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
     renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
     renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
     renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
 });
+
+document.getElementById('load_obj').addEventListener('click', () => {
+    renderChart(chart_objective(), document.getElementById('walletid').value);
+}

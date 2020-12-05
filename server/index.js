@@ -172,6 +172,11 @@ async function getAvgLoser() {
         "SELECT AVG(amount) result FROM wallethistory WHERE amount < 0;"));
 }
 
+async function getTotalPNL() {
+    return await connectAndRun(db => db.any(
+        "SELECT SUM(amount) result FROM wallethistory WHERE transacttype = 'RealisedPNL';"));
+}
+
 
 // user functions
 
@@ -344,6 +349,11 @@ app.get("/avgWinner", async (req, res) => {
 
 app.get("/avgLoser", async (req, res) => {
     const counts = await getAvgLoser();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/totalPNL", async (req, res) => {
+    const counts = await getTotalPNL();
     res.send(JSON.stringify(counts));
 });
 

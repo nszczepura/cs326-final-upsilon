@@ -11,7 +11,7 @@ function handleFiles(files) {
 }
 
 function getAsText(fileToRead) {
-  var reader = new FileReader();
+  const reader = new FileReader();
   // Read file into memory as UTF-8      
   reader.readAsText(fileToRead);
   // Handle errors load
@@ -20,17 +20,17 @@ function getAsText(fileToRead) {
 }
 
 function loadHandler(event) {
-  var csv = event.target.result;
+  const csv = event.target.result;
   processData(csv);
 }
 
 function processData(csv) {
-    var allTextLines = csv.split(/\r\n|\n/);
-    var lines = [];
-    for (var i=0; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split(';');
-            var tarr = [];
-            for (var j=0; j<data.length; j++) {
+    const allTextLines = csv.split(/\r\n|\n/);
+    const lines = [];
+    for (let i=0; i<allTextLines.length; i++) {
+        const data = allTextLines[i].split(';');
+            const tarr = [];
+            for (let j=0; j<data.length; j++) {
                 tarr.push(data[j]);
             }
             lines.push(tarr);
@@ -39,10 +39,10 @@ function processData(csv) {
 }
 
 function errorHandler(evt) {
-  if(evt.target.error.name == "NotReadableError") {
-      alert("Canno't read file !");
+  if(evt.target.error.name === "NotReadableError") {
+      alert("Cannot read file!");
   }
 }
 window.addEventListener("load", async function () {
   document.getElementById('csvFile').onchange = handleFiles;
-}
+});

@@ -24,8 +24,8 @@ const password = "admin";
 // Session configuration
 
 const session = {
-    secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
-    resave : false,
+    secret: process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+    resave: false,
     saveUninitialized: false
 };
 
@@ -37,20 +37,20 @@ const db = pgp(url);
 
 const strategy = new LocalStrategy(
     async (username, password, done) => {
-    if (!findUser(username)) {
-        // no such user
-        return done(null, false, { 'message' : 'Wrong username' });
-    }
-    if (!validatePassword(username, password)) {
-        // invalid password
-        // should disable logins after N messages
-        // delay return to rate-limit brute-force attacks
-        await new Promise((r) => setTimeout(r, 2000)); // two second delay
-        return done(null, false, { 'message' : 'Wrong password' });
-    }
-    // success!
-    // should create a user object here, associated with a unique identifier
-    return done(null, username);
+        if (!findUser(username)) {
+            // no such user
+            return done(null, false, { 'message': 'Wrong username' });
+        }
+        if (!validatePassword(username, password)) {
+            // invalid password
+            // should disable logins after N messages
+            // delay return to rate-limit brute-force attacks
+            await new Promise((r) => setTimeout(r, 2000)); // two second delay
+            return done(null, false, { 'message': 'Wrong password' });
+        }
+        // success!
+        // should create a user object here, associated with a unique identifier
+        return done(null, username);
     });
 
 
@@ -71,7 +71,7 @@ passport.deserializeUser((uid, done) => {
 });
 
 app.use(express.json()); // allow JSON inputs
-app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
+app.use(express.urlencoded({ 'extended': true })); // allow URLencoded data
 
 // database functions
 
@@ -86,15 +86,15 @@ async function connectAndRun(task) {
     } finally {
         try {
             connection.done();
-        } catch(ignored) {
+        } catch (ignored) {
 
         }
     }
 }
 
 async function insertWallet(wbalance, amount, account) {
-  console.log(wbalance, amount, account);
-  return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, userid]));
+    console.log(wbalance, amount, account);
+    return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, userid]));
 }
 
 async function getTradeHistory() {
@@ -116,7 +116,7 @@ async function getGainsLosses() {
 }
 
 async function insertUser(user, salt, hash) {
-  return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3);", [user, salt, hash]));
+    return await connectAndRun(db => db.any("INSERT INTO users Values($1, $2, $3);", [user, salt, hash]));
 }
 
 async function getUserInfo(user) {
@@ -124,7 +124,7 @@ async function getUserInfo(user) {
 }
 
 async function userExists(user) {
-  return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", user));
+    return await connectAndRun(db => db.any("SELECT username FROM users where username = $1", user));
 }
 
 async function getAvgGainLoss() {
@@ -142,11 +142,11 @@ async function getBestGainWorstLoss() {
 
 // Returns true iff the user exists.
 async function findUser(username) {
-    findid = await userExists(username);
-    if (findid !== null) {
-    return false;
+    console.log((await userExists(username)).length);
+    if ((await userExists(username)).length) {
+        return true;
     } else {
-    return true;
+        return false;
     }
 }
 
@@ -154,9 +154,9 @@ async function findUser(username) {
 async function validatePassword(name, pwd) {
     console.log('here');
     if (!findUser(name)) {
-    return false;
+        return false;
     }
-    const info = await getUserInfo(name);
+    const info = (await getUserInfo(name))[0];
     console.log('logging in');
     console.log(name);
     const result = mc.check(pwd, info['salt'], info['hash']);
@@ -165,9 +165,9 @@ async function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-function addUser(name, pwd) {
-    if (findUser(name)) {
-    return false;
+async function addUser(name, pwd) {
+    if (await findUser(name)) {
+        return false;
     }
     const [salt, hash] = mc.hash(pwd);
     insertUser(name, [salt, hash][0], [salt, hash][1]);
@@ -178,30 +178,29 @@ function addUser(name, pwd) {
 
 function checkLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
-    // If we are authenticated, run the next route.
-    next();
+        // If we are authenticated, run the next route.
+        next();
     } else {
-    // Otherwise, redirect to the login page.
-    res.redirect('/account.html');
+        // Otherwise, redirect to the login page.
+        res.redirect('/account');
     }
 }
 
 // Handle post data from the account.html form.
 app.post('/account',
-     passport.authenticate('local' , {     // use username/password authentication
-         'successRedirect' : '/private',   // when we login, go to /private 
-         'failureRedirect' : '/account.html'      // otherwise, back to login
-     }));
+    passport.authenticate('local', {     // use username/password authentication
+        'successRedirect': '/private',   // when we login, go to /private 
+        'failureRedirect': '/account'      // otherwise, back to login
+    }));
 
 // Handle the URL /login (just output the login.html file).
 app.get('/account',
-    (req, res) => res.sendFile('/account.html',
-                   { 'root' : __dirname }));
+    (req, res) => res.redirect('/account.html'));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
-    res.redirect('/account.html'); // back to login
+    res.redirect('/account'); // back to login
 });
 
 
@@ -210,20 +209,19 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 app.post('/register',
-     (req, res) => {
-         const username = req.body['username'];
-         const password = req.body['password'];
-         if (addUser(username, password)) {
-         res.redirect('/account.html');
-         } else {
-         res.redirect('/register.html');
-         }
-     });
+    async (req, res) => {
+        const username = req.body['username'];
+        const password = req.body['password'];
+        if (await addUser(username, password)) {
+            res.redirect('/account');
+        } else {
+            res.redirect('/register');
+        }
+    });
 
 // Register URL
 app.get('/register',
-    (req, res) => res.sendFile('/register.html',
-                   { 'root' : __dirname }));
+    (req, res) => res.redirect('/register.html'));
 
 // Private data
 app.get('/private',
@@ -241,7 +239,7 @@ app.get('/private/:userID/',
         if (req.params.userID === req.user) {
             res.redirect('/account_private.html');
         } else {
-        res.redirect('/private/');
+            res.redirect('/private/');
         }
     });
 
@@ -278,7 +276,7 @@ app.get("/bestGainWorstLoss", async (req, res) => {
 app.use(express.static('client'));
 
 app.get('*', (req, res) => {
-  res.send('Error');
+    res.send('Error');
 });
 
 app.listen(port, () => {

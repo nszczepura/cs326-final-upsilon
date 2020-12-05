@@ -124,7 +124,7 @@ async function getUserInfo(user) {
 }
 
 async function userExists(user) {
-  return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", user));
+  return await connectAndRun(db => db.any("SELECT username FROM users where username = $1", user));
 }
 
 async function getAvgGainLoss() {
@@ -142,11 +142,11 @@ async function getBestGainWorstLoss() {
 
 // Returns true iff the user exists.
 async function findUser(username) {
-    findid = await userExists(username);
-    if (findid !== null) {
-    return false;
-    } else {
+    console.log((await userExists(username)).length);
+    if ((await userExists(username)).length) {
     return true;
+    } else {
+    return false;
     }
 }
 
@@ -165,8 +165,8 @@ async function validatePassword(name, pwd) {
 }
 
 // Add a user to the "database".
-function addUser(name, pwd) {
-    if (findUser(name)) {
+async function addUser(name, pwd) {
+    if (await findUser(name)) {
     return false;
     }
     const [salt, hash] = mc.hash(pwd);
@@ -210,10 +210,10 @@ app.get('/logout', (req, res) => {
 // Use req.body to access data (as in, req.body['username']).
 // Use res.redirect to change URLs.
 app.post('/register',
-     (req, res) => {
+    async(req, res) => {
          const username = req.body['username'];
          const password = req.body['password'];
-         if (addUser(username, password)) {
+         if (await addUser(username, password)) {
          res.redirect('/account.html');
          } else {
          res.redirect('/register.html');

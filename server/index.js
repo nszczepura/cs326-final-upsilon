@@ -152,15 +152,11 @@ async function findUser(username) {
 
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
 async function validatePassword(name, pwd) {
-    console.log('here');
     if (!findUser(name)) {
         return false;
     }
     const info = (await getUserInfo(name))[0];
-    console.log('logging in');
-    console.log(name);
     const result = mc.check(pwd, info['salt'], info['hash']);
-    console.log(result);
     return result;
 }
 
@@ -192,6 +188,16 @@ app.post('/account',
         'successRedirect': '/private',   // when we login, go to /private 
         'failureRedirect': '/account'      // otherwise, back to login
     }));
+
+app.post('/uploadcsv', async (req, res) => {
+    let body = '';
+    req.on('data', data => body += data);
+    req.on('end', () => {
+        const test = JSON.parse(body);
+        console.log(test);
+    });
+    res.send("OK");
+});
 
 // Handle the URL /login (just output the login.html file).
 app.get('/account',

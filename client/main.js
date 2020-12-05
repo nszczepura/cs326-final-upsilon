@@ -105,9 +105,9 @@ async function renderChart2(id, resource, labels) {
 
 async function setStats() {
     const reqs = ['/totalPNL', '/avgWinner', '/avgLoser', '/largestPercentWinner',
-     '/largestPercentLoser', '/largestDollarWinner', '/largestDollarLoser', '/sumFeesPaid'];
+        '/largestPercentLoser', '/largestDollarWinner', '/largestDollarLoser', '/sumFeesPaid'];
 
-     for(let i = 0; i < 10; ++i){
+    for (let i = 0; i < 10; ++i) {
         const r1 = await fetch(reqs[i]).catch(function (error) {
             alert(error);
         });
@@ -118,9 +118,9 @@ async function setStats() {
         } else {
             console.error("Could not retrieve the trades from the server.");
         }
-     }
+    }
 
-    
+
 
 }
 

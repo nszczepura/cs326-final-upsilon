@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <script type="module" src="account_private.js" defer></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <title>MY ACCOUNT</title>
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-            <span class="navbar-brand mb-0 ml-3 h1"><em>EDGETRACK</em> <sub><em > FIND YOUR EDGE</em></sub></span>
-          
-            <div class="collapse navbar-collapse mr-3" id="navbarSupportedContent">
+<head>
+    <meta charset="UTF-8" />
+    <script type="module" src="account_private.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>MY ACCOUNT</title>
+</head>
 
-              <ul class="navbar-nav ml-auto">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <span class="navbar-brand mb-0 ml-3 h1"><em>EDGETRACK</em> <sub><em> FIND YOUR EDGE</em></sub></span>
+
+        <div class="collapse navbar-collapse mr-3" id="navbarSupportedContent">
+
+            <ul class="navbar-nav ml-auto">
                 <span class="border-right">
                     <li class="nav-item">
                         <a class="nav-link " href="index.html"><em>HOME</em></a>
@@ -34,21 +37,22 @@
                         <a class="nav-link" href="#"><em>ACCOUNT</em><span class="sr-only">(current)</span></a>
                     </li>
                 </span>
-              </ul>
-            </div>
-
-        </nav>
-        <div class="ml-5 mt-5">
-            <h1><em>Welcome !</em></h1>
-            <br><br>
-            <h4>Upload a csv of your trade history to get started</h4>
-            <label for="walletid"><em>Wallet Name:</em></label>
-            <input type="text" id="walletid" name="walletid">
-            <br><br>
-            <p>Format: (transactTime, transactType, amount, fee, address, transactStatus, walletBallance)</p>
-            <label for="csvFileInput"><em>CSV History: </em></label>
-            <input type="file" id="csvFile" accept=".csv">
+            </ul>
         </div>
 
-    </body>
+    </nav>
+    <div class="ml-5 mt-5">
+        <h1><em>Welcome !</em></h1>
+        <br><br>
+        <h4>Upload a csv of your trade history to get started</h4>
+        <label for="walletid"><em>Wallet Name:</em></label>
+        <input type="text" id="walletid" name="walletid">
+        <br><br>
+        <p>Format: (transactTime, transactType, amount, fee, address, transactStatus, walletBallance)</p>
+        <label for="csvFileInput"><em>CSV History: </em></label>
+        <input type="file" id="csvFile" accept=".csv">
+    </div>
+
+</body>
+
 </html>

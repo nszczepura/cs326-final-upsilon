@@ -92,8 +92,8 @@ async function connectAndRun(task) {
     }
 }
 
-async function insertWallet(transactTime, transactType, amount, fee, address, transactStatus, walletBallance, walletid) {
-    return await connectAndRun(db => db.any("INSERT INTO wallethistory Values($1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, walletid]));
+async function insertWallet(transactTime, transactType, amount, fee, address, transactStatus, walletBalance, walletid) {
+    return await connectAndRun(db => db.any("INSERT INTO wallethistory Values($1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBalance, walletid]));
 }
 
 async function getTradeHistory() {

@@ -43,7 +43,7 @@ function processData(csv) {
   }
   const wallet = document.getElementById('walletid').value;
   const send = {'data': lines, 'walletid': wallet};
-  postRequest(send, 'http://localhost:8080/uploadcsv');
+  postRequest(send, serv_url + '/uploadcsv');
 }
 
 function errorHandler(evt) {

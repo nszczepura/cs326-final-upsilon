@@ -1,6 +1,6 @@
 
 async function renderTable() {
-    const response = await fetch('/tradeHistory')
+    const response = await fetch('/walletHistory')
         .catch(function (error) {
             alert(error);
         });

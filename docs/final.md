@@ -27,18 +27,31 @@ W/L ,
 Total $ Gain/Loss, and 
 Best vs. Worst performer
 
+
+
 In depth-statistics breakdown
 
 Objective settings for performance comparison
 
+![Home Page](./finalhome.png)
+
 Trades -
 Table of trade history uploaded by user
+
+![Trade History](./finaltrades.png)
 
 Notes - 
 A place to write comments for the trading week/month, allows users to download a txt file with their stats and comments for archiving.
 
+
+![Notes Page](./finalnotes.png)
+
 Account - 
 Log in and register to upload your history and see your stats
+
+![Account Page](./finalaccount.png)
+![Register Page](./finalregister.png)
+![Login Page](./finallogin.png)
 
 ## APIs
 

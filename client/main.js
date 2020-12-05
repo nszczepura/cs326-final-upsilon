@@ -165,3 +165,7 @@ window.addEventListener("load", async function () {
 document.getElementById('load_obj').addEventListener('click', () => {
     renderChart(chart_objective(), document.getElementById('walletid').value);
 });
+
+document.getElementById('load_stats').addEventListener('click', () => {
+    renderChart(chart_objective(), document.getElementById('walletid').value);
+});

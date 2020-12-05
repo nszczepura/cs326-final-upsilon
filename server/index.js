@@ -120,11 +120,11 @@ async function insertUser(user, salt, hash) {
 }
 
 async function getUserInfo(user) {
-    return await connectAndRun(db => db.any("SELECT * FROM users where username = $1", [user]));
+    return await connectAndRun(db => db.any("SELECT * FROM users where username = $1", user));
 }
 
 async function userExists(user) {
-  return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", [user]));
+  return await connectAndRun(db => db.any("SELECT 1 FROM users where username = $1", user));
 }
 
 async function getAvgGainLoss() {
@@ -141,8 +141,9 @@ async function getBestGainWorstLoss() {
 // user functions
 
 // Returns true iff the user exists.
-function findUser(username) {
-    if (userExists(username) !== null) {
+async function findUser(username) {
+    findid = await userExists(username);
+    if (findid !== null) {
     return false;
     } else {
     return true;
@@ -150,13 +151,17 @@ function findUser(username) {
 }
 
 // Returns true iff the password is the one we have stored (in plaintext = bad but easy).
-function validatePassword(name, pwd) {
+async function validatePassword(name, pwd) {
+    console.log('here');
     if (!findUser(name)) {
     return false;
     }
-    const userin = getUserInfo(name);
-    const res = mc.check(pwd, userin['salt'], userin['hash']);
-    return res;
+    const info = await getUserInfo(name);
+    console.log('logging in');
+    console.log(name);
+    const result = mc.check(pwd, info['salt'], info['hash']);
+    console.log(result);
+    return result;
 }
 
 // Add a user to the "database".
@@ -177,7 +182,7 @@ function checkLoggedIn(req, res, next) {
     next();
     } else {
     // Otherwise, redirect to the login page.
-    res.redirect('/account');
+    res.redirect('/account.html');
     }
 }
 
@@ -185,18 +190,18 @@ function checkLoggedIn(req, res, next) {
 app.post('/account',
      passport.authenticate('local' , {     // use username/password authentication
          'successRedirect' : '/private',   // when we login, go to /private 
-         'failureRedirect' : '/account'      // otherwise, back to login
+         'failureRedirect' : '/account.html'      // otherwise, back to login
      }));
 
 // Handle the URL /login (just output the login.html file).
 app.get('/account',
-    (req, res) => res.sendFile('/../html/account.html',
+    (req, res) => res.sendFile('/account.html',
                    { 'root' : __dirname }));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
-    res.redirect('/account'); // back to login
+    res.redirect('/account.html'); // back to login
 });
 
 
@@ -209,15 +214,15 @@ app.post('/register',
          const username = req.body['username'];
          const password = req.body['password'];
          if (addUser(username, password)) {
-         res.redirect('/../html/account.html');
+         res.redirect('/account.html');
          } else {
-         res.redirect('/../html/register.html');
+         res.redirect('/register.html');
          }
      });
 
 // Register URL
 app.get('/register',
-    (req, res) => res.sendFile('/../html/register.html',
+    (req, res) => res.sendFile('/register.html',
                    { 'root' : __dirname }));
 
 // Private data
@@ -234,10 +239,7 @@ app.get('/private/:userID/',
     (req, res) => {
         // Verify this is the right user.
         if (req.params.userID === req.user) {
-        res.writeHead(200, {"Content-Type" : "text/html"});
-        res.write('<H1>HELLO ' + req.params.userID + "</H1>");
-        res.write('<br/><a href="/logout">click here to logout</a>');
-        res.end();
+            res.redirect('/account_private.html');
         } else {
         res.redirect('/private/');
         }

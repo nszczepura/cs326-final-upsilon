@@ -1,4 +1,4 @@
-async function renderChart() {
+async function renderChart(obj) {
     const labels = [];
     const data = [];
     const response = await fetch('/walletHistory')
@@ -21,6 +21,11 @@ async function renderChart() {
         data: {
             labels: labels,
             datasets: [{
+                label: 'objective',
+                borderColor: 'rgb(255, 142, 0)',
+                data: obj
+            },
+            {
                 label: 'chart test',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
@@ -131,10 +136,10 @@ function chart_objective() {
 setStats();
 
 window.addEventListener("load", async function () {
-    const start_cap = document.getElementById('starting-capital').defaultValue = 10000;
-    const gain = document.getElementById('percent-gain').defaultValue = 1;
-    const steps = document.getElementById('number-of-trades').defaultValue = 10;
-    renderChart();
+    const start_cap = document.getElementById('starting-capital').defaultValue = 500000;
+    const gain = document.getElementById('percent-gain').defaultValue = 2;
+    const steps = document.getElementById('number-of-trades').defaultValue = 37;
+    renderChart(chart_objective());
     renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
     renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
     renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);

@@ -15,7 +15,7 @@ const crypto = require('crypto');
   @module miniCrypt
   @desc A tiny crypto lib for the 326 kids.
  */
-module.exports = (function() {
+module.exports = (function () {
   /**
     @constructor
     @arg {number} its - The number of iterations to be performed; higher iterations means more security but slower speed.
@@ -38,9 +38,9 @@ module.exports = (function() {
     @returns {[string, string]} - An array containing (1) the salt used to hash the specified password, and (2) the hash itself.
     @desc Hash a user password.
    */
-  MiniCrypt.prototype.hash = function(pw) {
+  MiniCrypt.prototype.hash = function (pw) {
     const salt = crypto.randomBytes(this.saltL).toString('hex'), // get our new salt for this pw
-          hash = crypto.pbkdf2Sync(pw, salt, this.its, this.keyL, this.digest).toString('hex'); // hash the pw
+      hash = crypto.pbkdf2Sync(pw, salt, this.its, this.keyL, this.digest).toString('hex'); // hash the pw
     return [salt, hash]; // return the pair for safe storage
   };
 
@@ -53,7 +53,7 @@ module.exports = (function() {
     @returns {Boolean} - A result of `true` iff `pw` & `salt` hash to `hash`.
     @desc Validate a user password.
    */
-  MiniCrypt.prototype.check = function(pw, salt, hash) {
+  MiniCrypt.prototype.check = function (pw, salt, hash) {
     return crypto.pbkdf2Sync(pw, salt, this.its, this.keyL, this.digest).toString('hex') === hash;
   };
 

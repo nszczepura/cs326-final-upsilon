@@ -232,7 +232,7 @@ app.post('/account',
 app.post('/uploadcsv', async (req, res) => {
     const data = req.body['data'];
     const wallet = req.body['walletid'];
-    for(let i = 1; i < data.length; i++){
+    for (let i = 1; i < data.length; i++) {
         await insertWallet(data[i][0].substring(1), data[i][2], data[i][3], data[i][4], data[i][5], data[i][6], data[i][7], wallet);
     }
 });

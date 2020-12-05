@@ -8,8 +8,8 @@ async function renderChart(obj, walletid) {
     if (response.ok) {
         const someJSON = await response.json();
         for (let i = 0; i < someJSON.length; ++i) {
-            labels.push("" + i);
             if (someJSON[i]['walletid'] === walletid) {
+                labels.push("" + i);
                 data.push(someJSON[i]['walletbalance']);
             }
         }

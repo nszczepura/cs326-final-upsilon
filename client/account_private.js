@@ -3,6 +3,17 @@
 // csv loading using example from
 // https://blog.mounirmesselmeni.de/2012/11/20/reading-csv-file-with-javascript-and-html5-file-api/
 
+async function postRequest(data, url) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+
 async function getAsText(fileToRead) {
   const reader = new FileReader();
   // Read file into memory as UTF-8      
@@ -28,9 +39,8 @@ function processData(csv) {
           }
           lines.push(tarr);
   }
-  for(let i = 1; i < lines.length; i++){
-    console.log(lines[i]);
-  }
+  const send = {'data': lines};
+  postRequest(send, 'http://localhost:8080/uploadcsv');
 }
 
 function errorHandler(evt) {

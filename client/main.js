@@ -122,6 +122,19 @@ async function setStats() {
     data.forEach(a => pnlTotal += a['pnl'] * 10000);
     document.getElementById("" + 11).innerText = pnlTotal;
     console.log(pnlTotal);
+
+
+    const r1 = await fetch('/largestPercentWinner').catch(function (error) {
+        alert(error);
+    });
+    if (r1.ok) {
+        const someJSON = await r1.json();
+        console.log(someJSON[0]['result']);
+        document.getElementById("" + 6).innerText = someJSON[0]['result'];
+    } else {
+        console.error("Could not retrieve the trades from the server.");
+    }
+
 }
 
 function chart_objective() {

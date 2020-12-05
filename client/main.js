@@ -134,10 +134,9 @@ window.addEventListener("load", async function () {
     const start_cap = document.getElementById('starting-capital').defaultValue = 10000;
     const gain = document.getElementById('percent-gain').defaultValue = 1;
     const steps = document.getElementById('number-of-trades').defaultValue = 10;
-    console.log(chart_objective());
-    //renderChart();
-    //renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
-    //renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
-    //renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
-    //renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
+    renderChart();
+    renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
+    renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
+    renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
+    renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
 });

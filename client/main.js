@@ -104,8 +104,7 @@ async function renderChart2(id, resource, labels) {
 }
 
 async function setStats() {
-    const reqs = ['/totalPNL', '/avgWinner', '/avgLoser', 
-    '/largestPercentWinner', '/largestPercentWinner', '/largestPercentWinner',
+    const reqs = ['/totalPNL', '/avgWinner', '/avgLoser', '/largestPercentWinner',
      '/largestPercentLoser', '/largestDollarWinner', '/largestDollarLoser', '/sumFeesPaid'];
 
      for(let i = 0; i < 10; ++i){

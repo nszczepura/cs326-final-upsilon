@@ -137,6 +137,8 @@ async function getBestGainWorstLoss() {
 
 }
 
+    return await connectAndRun(db => db.any(
+async function getLargestDollarWinner() {
 // user functions
 
 // Returns true iff the user exists.

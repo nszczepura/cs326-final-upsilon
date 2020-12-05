@@ -18,17 +18,19 @@ function loadHandler(event) {
 }
 
 function processData(csv) {
-    const allTextLines = csv.split(/\r\n|\n/);
-    const lines = [];
-    for (let i=0; i<allTextLines.length; i++) {
-        const data = allTextLines[i].split(';');
-            const tarr = [];
-            for (let j=0; j<data.length; j++) {
-                tarr.push(data[j]);
-            }
-            lines.push(tarr);
-    }
-  console.log(lines);
+  const allTextLines = csv.split(/\r\n|\n/);
+  const lines = [];
+  for (let i=0; i<allTextLines.length; i++) {
+      const data = allTextLines[i].split(',');
+          const tarr = [];
+          for (let j=0; j<data.length; j++) {
+              tarr.push(data[j]);
+          }
+          lines.push(tarr);
+  }
+  for(let i = 1; i < lines.length; i++){
+    console.log(lines[i]);
+  }
 }
 
 function errorHandler(evt) {

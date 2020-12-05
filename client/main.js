@@ -9,7 +9,9 @@ async function renderChart(obj) {
         const someJSON = await response.json();
         for (let i = 0; i < someJSON.length; ++i) {
             labels.push("" + i);
-            data.push(someJSON[i]['walletbalance']);
+            if(someJSON[i]['walletid'] === 'test'){
+                data.push(someJSON[i]['walletbalance']);
+            }
         }
     } else {
         console.error("Could not retrieve the wallet from the server.");

@@ -106,12 +106,12 @@ async function getWalletHistory() {
 
 async function getWinLossCounts() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT COUNT(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT COUNT(-pnl) FROM trades WHERE pnl < 0) AS second;"));
+        "SELECT (SELECT COUNT(amount) FROM wallethistory WHERE amount > 0) AS first, (SELECT COUNT(-amount) FROM wallethistory WHERE amount < 0) AS second;"));
 }
 
 async function getGainsLosses() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT SUM(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT SUM(-pnl) FROM trades WHERE pnl < 0) AS second;"));
+        "SELECT (SELECT SUM(amount) FROM wallethistory WHERE amount > 0) AS first, (SELECT SUM(-amount) FROM wallethistory WHERE amount < 0) AS second;"));
 }
 
 async function insertUser(user, salt, hash) {
@@ -128,12 +128,12 @@ async function userExists(user) {
 
 async function getAvgGainLoss() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT AVG(pnl) FROM trades WHERE pnl > 0) AS first, (SELECT AVG(-pnl) FROM trades WHERE pnl < 0) AS second;"));
+        "SELECT (SELECT AVG(amount) FROM wallethistory WHERE amount > 0) AS first, (SELECT AVG(-amount) FROM wallethistory WHERE amount < 0) AS second;"));
 }
 
 async function getBestGainWorstLoss() {
     return await connectAndRun(db => db.any(
-        "SELECT (SELECT MAX(pnl) FROM trades) AS first, (SELECT MAX(-pnl) FROM trades) AS second;"));
+        "SELECT (SELECT MAX(amount) FROM wallethistory) AS first, (SELECT MAX(-amount) FROM wallethistory) AS second;"));
 
 }
 

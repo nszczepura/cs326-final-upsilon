@@ -139,12 +139,12 @@ async function getBestGainWorstLoss() {
 
 async function getLargestPercentWinner() {
     return await connectAndRun(db => db.any(
-        "SELECT MAX(amount/walletbalance) result FROM wallethistory;"));
+        "SELECT MAX(amount/walletbalance * 100) result FROM wallethistory;"));
 }
 
 async function getLargestPercentLoser() {
     return await connectAndRun(db => db.any(
-        "SELECT MIN(amount/walletbalance) result FROM wallethistory;"));
+        "SELECT MIN(amount/walletbalance * 100) result FROM wallethistory;"));
 }
 
 async function getLargestDollarWinner() {
@@ -155,6 +155,21 @@ async function getLargestDollarWinner() {
 async function getLargestDollarLoser() {
     return await connectAndRun(db => db.any(
         "SELECT MIN(amount) result FROM wallethistory;"));
+}
+
+async function getSumFeesPaid() {
+    return await connectAndRun(db => db.any(
+        "SELECT SUM(fee) result FROM wallethistory;"));
+}
+
+async function getAvgWinner() {
+    return await connectAndRun(db => db.any(
+        "SELECT AVG(amount) result FROM wallethistory WHERE amount > 0;"));
+}
+
+async function getAvgLoser() {
+    return await connectAndRun(db => db.any(
+        "SELECT AVG(amount) result FROM wallethistory WHERE amount < 0;"));
 }
 
 
@@ -314,6 +329,21 @@ app.get("/largestDollarWinner", async (req, res) => {
 
 app.get("/largestDollarLoser", async (req, res) => {
     const counts = await getLargestDollarLoser();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/sumFeesPaid", async (req, res) => {
+    const counts = await getSumFeesPaid();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/avgWinner", async (req, res) => {
+    const counts = await getAvgWinner();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/avgLoser", async (req, res) => {
+    const counts = await getAvgLoser();
     res.send(JSON.stringify(counts));
 });
 

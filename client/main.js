@@ -9,7 +9,7 @@ async function renderChart(obj, walletid) {
         const someJSON = await response.json();
         for (let i = 0; i < someJSON.length; ++i) {
             labels.push("" + i);
-            if(someJSON[i]['walletid'] === walletid){
+            if (someJSON[i]['walletid'] === walletid) {
                 data.push(someJSON[i]['walletbalance']);
             }
         }
@@ -104,36 +104,25 @@ async function renderChart2(id, resource, labels) {
 }
 
 async function setStats() {
-    const data = [];
-    const response = await fetch('/tradeHistory')
-        .catch(function (error) {
+    const reqs = ['/largestPercentWinner', '/largestPercentWinner', '/largestPercentWinner', 
+    '/largestPercentWinner', '/largestPercentWinner', '/largestPercentWinner',
+     '/largestPercentWinner', '/largestDollarWinner', '/largestDollarWinner', '/largestPercentWinner', 
+     '/largestPercentWinner', '/largestPercentWinner'];
+
+     for(let i = 0; i < 10; ++i){
+        const r1 = await fetch(reqs[i]).catch(function (error) {
             alert(error);
         });
-    if (response.ok) {
-        const someJSON = await response.json();
-        for(const i in someJSON){
-            data.push(someJSON[i]);
+        if (r1.ok) {
+            const someJSON = await r1.json();
+            console.log(someJSON[0]['result']);
+            document.getElementById("" + i).innerText = someJSON[0]['result'];
+        } else {
+            console.error("Could not retrieve the trades from the server.");
         }
-    } else {
-        console.error("Could not retrieve the trades from the server.");
-    }
-    console.log(data[0]);
-    let pnlTotal = 0;
-    data.forEach(a => pnlTotal += a['pnl'] * 10000);
-    document.getElementById("" + 11).innerText = pnlTotal;
-    console.log(pnlTotal);
+     }
 
-
-    const r1 = await fetch('/largestPercentWinner').catch(function (error) {
-        alert(error);
-    });
-    if (r1.ok) {
-        const someJSON = await r1.json();
-        console.log(someJSON[0]['result']);
-        document.getElementById("" + 6).innerText = someJSON[0]['result'];
-    } else {
-        console.error("Could not retrieve the trades from the server.");
-    }
+    
 
 }
 
@@ -142,8 +131,8 @@ function chart_objective() {
     const gain = document.getElementById('percent-gain').value;
     const steps = document.getElementById('number-of-trades').value;
     let obj_list = [parseInt(start_cap)];
-    for(let i = 1; i < steps; i++){
-        obj_list.push(parseInt(obj_list[i-1]) + (parseInt(obj_list[i-1])*(parseFloat(gain) * 0.01)));
+    for (let i = 1; i < steps; i++) {
+        obj_list.push(parseInt(obj_list[i - 1]) + (parseInt(obj_list[i - 1]) * (parseFloat(gain) * 0.01)));
     }
     return obj_list;
 }
@@ -164,4 +153,4 @@ window.addEventListener("load", async function () {
 
 document.getElementById('load_obj').addEventListener('click', () => {
     renderChart(chart_objective(), document.getElementById('walletid').value);
-}
+});

@@ -58,26 +58,47 @@ Log in and register to upload your history and see your stats
 POST /account
 
 POST /uploadcsv
+
 GET /account
+
 GET /logout
+
 POST /register
+
 GET /register
+
 GET /private
+
 GET /private/:userID/
+
 GET /tradeHistory
+
 GET /walletHistory
+
 GET /winLoss
+
 GET /gainsLosses
+
 GET /avgGainLoss
+
 GET /bestGainWorstLoss
+
 GET /largestPercentWinner
+
 GET /largestPercentLoser
+
 GET /largetsDollarWinner
+
 GET /largestDollarLoser
+
 GET /sumFeesPaid
+
 GET /avgWinner
+
 GET /avgLoser
+
 GET /totalPNL
+
 GET /*
 
 

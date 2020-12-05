@@ -1,10 +1,9 @@
+/* eslint-disable no-empty */
 'use strict';
 
 // For loading environment variables.
 require('dotenv').config();
 
-const request = require('request');
-const crypto = require('crypto');
 const pgPromise = require('pg-promise');
 const pgp = pgPromise({});
 const express = require('express');                 // express routing
@@ -81,6 +80,7 @@ async function connectAndRun(task) {
     try {
         connection = await db.connect();
         return await task(connection);
+    // eslint-disable-next-line no-useless-catch
     } catch (e) {
         throw e;
     } finally {
@@ -180,7 +180,6 @@ async function getTotalPNL() {
 
 // Returns true iff the user exists.
 async function findUser(username) {
-    console.log((await userExists(username)).length);
     if ((await userExists(username)).length) {
         return true;
     } else {
@@ -228,6 +227,7 @@ app.post('/account',
     }));
 
 // Upload CSV data to the wallethistory table
+// eslint-disable-next-line no-unused-vars
 app.post('/uploadcsv', async (req, res) => {
     const data = req.body['data'];
     const wallet = req.body['walletid'];

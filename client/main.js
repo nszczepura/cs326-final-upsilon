@@ -18,7 +18,8 @@ async function renderChart(obj, walletid) {
         console.error("Could not retrieve the wallet from the server.");
     }
     const chartID = document.getElementById('portfolio').getContext('2d');
-    const chart = new Chart(chartID, {
+    // eslint-disable-next-line no-undef
+    new Chart(chartID, {
         type: 'line',
 
         data: {
@@ -58,7 +59,9 @@ async function renderChart2(id, resource, labels) {
         console.error("Could not retrieve the wallet from the server.");
     }
     const chartID = document.getElementById(id).getContext('2d');
-    const chart = new Chart(chartID, {
+    
+    // eslint-disable-next-line no-undef
+    new Chart(chartID, {
         type: 'bar',
 
         data: {
@@ -132,7 +135,7 @@ function chart_objective() {
     const start_cap = document.getElementById('starting-capital').value;
     const gain = document.getElementById('percent-gain').value;
     const steps = document.getElementById('number-of-trades').value;
-    let obj_list = [parseInt(start_cap)];
+    const obj_list = [parseInt(start_cap)];
     for (let i = 1; i < steps; i++) {
         obj_list.push(parseInt(obj_list[i - 1]) + (parseInt(obj_list[i - 1]) * (parseFloat(gain) * 0.01)));
     }
@@ -142,10 +145,10 @@ function chart_objective() {
 setStats();
 
 window.addEventListener("load", async function () {
-    const start_cap = document.getElementById('starting-capital').defaultValue = 500000;
-    const gain = document.getElementById('percent-gain').defaultValue = 2;
-    const steps = document.getElementById('number-of-trades').defaultValue = 37;
-    document.getElementById('walletid').defaultValue = 'test';
+    document.getElementById('starting-capital').defaultValue = 500000;
+    document.getElementById('percent-gain').defaultValue = 2;
+    document.getElementById('number-of-trades').defaultValue = 37;
+    document.getElementById('walletid').defaultValue = 'tester';
     renderChart(chart_objective(), 'test');
     renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
     renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);

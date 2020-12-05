@@ -6,12 +6,14 @@
 const serv_url = 'https://edgetrack.herokuapp.com' || 'localhost:8080';
 
 async function postRequest(data, url) {
-  const response = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
+  }).catch(function (error) {
+    alert(error);
   });
 }
 

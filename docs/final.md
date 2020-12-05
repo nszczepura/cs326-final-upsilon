@@ -99,8 +99,89 @@ GET /totalPNL - Calls a function that uses an SQL query to return the net profit
 
 
 ## Database
-
-
+```
+                                          Table "wallethistory"
+     Column     |         Type          | Description
+----------------+-----------------------+------------------------------------------------------------------
+ transacttime   | date                  | Date of transaction
+ transacttype   | character varying(50) | Type of transaction
+ amount         | numeric(20,2)         | Amount change for transaction
+ fee            | numeric(20,2)         | Fee for transaction
+ address        | character varying(50) | Pair of currencies exchanged
+ transactstatus | character varying(50) | Status of transaction
+ walletbalance  | numeric(20,2)         | Balance as the of the date
+ walletid       | character varying(50) | Username/ID for the wallet
+ ```
+ 
+ ```
+                                            Table "users"
+  Column  |          Type          | Description
+----------+------------------------+-------------------------------------------------------------------
+ username | character varying(50)  | Username of account
+ salt     | character varying(32)  | Unique salt of account
+ hash     | character varying(128) | Hashed password of account
+ ```
 ## URL Routes/Mappings
 
+/(index.html) - Home page
+
+/trades.html - Trades page
+
+/notes.html - Notes page
+
+/account.html - Account page
+
+/register.html - Registration page
+
+/account_private.html - Account page after login
+
+/account - Relates to retrieving and posting information on the account.html page
+
+/uploadcsv - Used uploading csv to database
+
+/logout - Used for loggin out
+
+/register - Relates to retrieving and posting information on the register.html page
+
+/private - Relates to user authentication
+
+/private/:userID/ - Relates to user authentication
+
+/walletHistory - Retrieves sql data
+
+/winLoss - Retrieves sql data
+
+/gainsLosses - Retrieves sql data
+
+/avgGainLoss - Retrieves sql data
+
+/bestGainWorstLoss - Retrieves sql data
+
+/largestPercentWinner - Retrieves sql data
+
+/largestPercentLoser - Retrieves sql data
+
+/largetsDollarWinner - Retrieves sql data
+
+/largestDollarLoser - Retrieves sql data
+
+/sumFeesPaid - Retrieves sql data
+
+/avgWinner - Retrieves sql data
+
+/avgLoser - Retrieves sql data
+
+/totalPNL - Retrieves sql data
+
+## Authentication/Authorization
+Users are authenticated cryptographically; passwords with a salt will be checked against hashes in the database.
+Username registration will be checked against the database as well to avoid duplicate usernames.
+This relates to the UI in the account and registration page.
+
+
+## Division of Labor
+
+
+
+## Conclusion
 

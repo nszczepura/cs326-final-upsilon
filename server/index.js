@@ -156,7 +156,7 @@ async function validatePassword(name, pwd) {
     if (!findUser(name)) {
         return false;
     }
-    const info = await getUserInfo(name);
+    const info = (await getUserInfo(name))[0];
     console.log('logging in');
     console.log(name);
     const result = mc.check(pwd, info['salt'], info['hash']);
@@ -182,7 +182,7 @@ function checkLoggedIn(req, res, next) {
         next();
     } else {
         // Otherwise, redirect to the login page.
-        res.redirect('/account.html');
+        res.redirect('/account');
     }
 }
 
@@ -190,18 +190,17 @@ function checkLoggedIn(req, res, next) {
 app.post('/account',
     passport.authenticate('local', {     // use username/password authentication
         'successRedirect': '/private',   // when we login, go to /private 
-        'failureRedirect': '/account.html'      // otherwise, back to login
+        'failureRedirect': '/account'      // otherwise, back to login
     }));
 
 // Handle the URL /login (just output the login.html file).
 app.get('/account',
-    (req, res) => res.sendFile('/account.html',
-        { 'root': __dirname }));
+    (req, res) => res.redirect('/account.html'));
 
 // Handle logging out (takes us back to the login page).
 app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
-    res.redirect('/account.html'); // back to login
+    res.redirect('/account'); // back to login
 });
 
 
@@ -214,16 +213,15 @@ app.post('/register',
         const username = req.body['username'];
         const password = req.body['password'];
         if (await addUser(username, password)) {
-            res.redirect('/account.html');
+            res.redirect('/account');
         } else {
-            res.redirect('/register.html');
+            res.redirect('/register');
         }
     });
 
 // Register URL
 app.get('/register',
-    (req, res) => res.sendFile('/register.html',
-        { 'root': __dirname }));
+    (req, res) => res.redirect('/register.html'));
 
 // Private data
 app.get('/private',

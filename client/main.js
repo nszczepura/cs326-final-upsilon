@@ -117,12 +117,27 @@ async function setStats() {
     console.log(pnlTotal);
 }
 
+function chart_objective() {
+    const start_cap = document.getElementById('starting-capital').value;
+    const gain = document.getElementById('percent-gain').value;
+    const steps = document.getElementById('number-of-trades').value;
+    let obj_list = [parseInt(start_cap)];
+    for(let i = 1; i < steps; i++){
+        obj_list.push(parseInt(obj_list[i-1]) + (parseInt(obj_list[i-1])*(parseFloat(gain) * 0.01)));
+    }
+    return obj_list;
+}
+
 setStats();
 
 window.addEventListener("load", async function () {
-    renderChart();
-    renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
-    renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
-    renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
-    renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
+    const start_cap = document.getElementById('starting-capital').defaultValue = 10000;
+    const gain = document.getElementById('percent-gain').defaultValue = 1;
+    const steps = document.getElementById('number-of-trades').defaultValue = 10;
+    console.log(chart_objective());
+    //renderChart();
+    //renderChart2('p1', 'winLoss', ['Wins', 'Losses']);
+    //renderChart2('p2', 'gainsLosses', ['Total Gained', 'Total Lost']);
+    //renderChart2('p3', 'bestGainWorstLoss', ['Best Gain', 'Worst Loss']);
+    //renderChart2('p4', 'avgGainLoss', ['Average Gained', 'Average Lost']);
 });

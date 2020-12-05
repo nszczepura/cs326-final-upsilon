@@ -181,7 +181,30 @@ This relates to the UI in the account and registration page.
 
 ## Division of Labor
 
+Nicholas Szczepura 
+- Created wireframes
+- Started up the server 
+- Set up api to access bitmex wallet history (deprecated due to api failure thanks to bitmex), updated the postgress database, troubleshooted heroku bs.
+- Continued to chug along with heroku s***
+- Added a private account page that can be used to upload csv files (bitmex just had to crap out on the last moment)
+- Modified Home page to load objective and csv data to a Objective chart
+- Connected login and registration to authentication processes
+- Bug fixes
 
+Kevin Sanchez
+- Started HTML/CSS skeleton for Home page and Notes page
+- Worked on front end for Account and Notes
+- Hooked up the main page charts to receive data from postgres via api requests and made an objective input skeleton (made endpoints).
+- Made more endpoints for statistics
+- Bug fixes
+
+Eliezer Encarnacion
+- Started HTML/CSS skeleton for Trades page and Account page
+- Worked on front end for Home and Trade History
+- Created the register page linked to account page.
+- Bug fixes
 
 ## Conclusion
+
+We've learned about new levels of pain in regards to troubleshooting. We've also gained experience in how to progressively build up a website, from the initial wirerframes, to basic front end with bootstrap, server setup, database management, and api endpoint implementations. Most of our difficulties lie in tying up the client with the server, truggling to work with git version control (branches failing to be up to date with latest commits, having suddenly broken code pushed), occasional reminders of having to make certain functions asychronous when necessary, handling promise rejections, and working with Heroku.  
 

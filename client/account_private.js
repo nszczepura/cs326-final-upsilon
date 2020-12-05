@@ -1,16 +1,9 @@
+
+
 // csv loading using example from
 // https://blog.mounirmesselmeni.de/2012/11/20/reading-csv-file-with-javascript-and-html5-file-api/
-function handleFiles(files) {
-  // Check for the various File API support.
-  if (window.FileReader) {
-      // FileReader are supported.
-      getAsText(files[0]);
-  } else {
-      alert('FileReader are not supported in this browser.');
-  }
-}
 
-function getAsText(fileToRead) {
+async function getAsText(fileToRead) {
   const reader = new FileReader();
   // Read file into memory as UTF-8      
   reader.readAsText(fileToRead);
@@ -44,5 +37,15 @@ function errorHandler(evt) {
   }
 }
 window.addEventListener("load", async function () {
-  document.getElementById('csvFile').onchange = handleFiles;
+  const inputCSV = document.getElementById('csvFile');
+  inputCSV.addEventListener('change', handleFiles, false);
+  function handleFiles() {
+  // Check for the various File API support.
+  if (window.FileReader) {
+      // FileReader are supported.
+      getAsText(this.files[0]);
+  } else {
+      alert('FileReader are not supported in this browser.');
+  }
+}
 });

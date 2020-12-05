@@ -92,9 +92,8 @@ async function connectAndRun(task) {
     }
 }
 
-async function insertWallet(wbalance, amount, account) {
-    console.log(wbalance, amount, account);
-    return await connectAndRun(db => db.any("INSERT INTO wallethistory Values(NULL, $1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, userid]));
+async function insertWallet(transactTime, transactType, amount, fee, address, transactStatus, walletBallance, walletid) {
+    return await connectAndRun(db => db.any("INSERT INTO wallethistory Values($1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBallance, walletid]));
 }
 
 async function getTradeHistory() {
@@ -190,13 +189,11 @@ app.post('/account',
     }));
 
 app.post('/uploadcsv', async (req, res) => {
-    let body = '';
-    req.on('data', data => body += data);
-    req.on('end', () => {
-        const test = JSON.parse(body);
-        console.log(test);
-    });
-    res.send("OK");
+    const data = req.body['data'];
+    const wallet = req.body['walletid'];
+    for(let i = 1; i < data.length; i++){
+        await insertWallet(data[i][0].substring(1), data[i][2], data[i][3], data[i][4], data[i][5], data[i][6], data[i][7], wallet);
+    }
 });
 
 // Handle the URL /login (just output the login.html file).

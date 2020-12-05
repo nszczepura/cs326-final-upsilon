@@ -3,6 +3,8 @@
 // csv loading using example from
 // https://blog.mounirmesselmeni.de/2012/11/20/reading-csv-file-with-javascript-and-html5-file-api/
 
+const serv_url = 'https://edgetrack.herokuapp.com' || 'localhost:8080';
+
 async function postRequest(data, url) {
     const response = await fetch(url, {
         method: 'POST',

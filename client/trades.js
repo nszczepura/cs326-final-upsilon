@@ -1,4 +1,4 @@
-
+// Fetches raw data for trades page
 async function renderTable() {
     const response = await fetch('/walletHistory')
         .catch(function (error) {

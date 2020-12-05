@@ -2,8 +2,10 @@
 let text = "";
 
 async function textToDownload() {
+    // Retrieves typed notes
     text = document.getElementById('personalnotes').value;
 
+    // Retrieves raw trade data
     text += "\n\nYour Trade History\n##########################################################\n\n";
 
     const response = await fetch('/walletHistory')

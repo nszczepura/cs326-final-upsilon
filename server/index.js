@@ -92,6 +92,8 @@ async function connectAndRun(task) {
     }
 }
 
+// Helper functions for SQL queries
+
 async function insertWallet(transactTime, transactType, amount, fee, address, transactStatus, walletBalance, walletid) {
     return await connectAndRun(db => db.any("INSERT INTO wallethistory Values($1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBalance, walletid]));
 }
@@ -225,6 +227,7 @@ app.post('/account',
         'failureRedirect': '/account'      // otherwise, back to login
     }));
 
+// Upload CSV data to the wallethistory table
 app.post('/uploadcsv', async (req, res) => {
     const data = req.body['data'];
     const wallet = req.body['walletid'];
@@ -242,7 +245,6 @@ app.get('/logout', (req, res) => {
     req.logout(); // Logs us out!
     res.redirect('/account'); // back to login
 });
-
 
 // Like login, but add a new user and password IFF one doesn't exist already.
 // If we successfully add a new user, go to /login, else, back to /register.
@@ -270,7 +272,6 @@ app.get('/private',
         res.redirect('/private/' + req.user);
     });
 
-//
 // A dummy page for the user.
 app.get('/private/:userID/',
     checkLoggedIn, // We also protect this route: authenticated...
@@ -283,76 +284,85 @@ app.get('/private/:userID/',
         }
     });
 
+// Retrieves the raw data from the database
 app.get("/walletHistory", async (req, res) => {
     const wallet = await getWalletHistory();
     res.send(JSON.stringify(wallet));
 });
 
+// Calls a function that uses an SQL query to return the ratio of the number profits and losses
 app.get("/winLoss", async (req, res) => {
     const counts = await getWinLossCounts();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the comparison of the sum of profits and losses
 app.get("/gainsLosses", async (req, res) => {
     const counts = await getGainsLosses();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the comparison of average profit and average loss
 app.get("/avgGainLoss", async (req, res) => {
     const counts = await getAvgGainLoss();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the comparison of the best profit and worst loss
 app.get("/bestGainWorstLoss", async (req, res) => {
     const counts = await getBestGainWorstLoss();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the largest profit relative to the balance at the time
 app.get("/largestPercentWinner", async (req, res) => {
     const counts = await getLargestPercentWinner();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the largest loss relative to the balance at the time
 app.get("/largestPercentLoser", async (req, res) => {
     const counts = await getLargestPercentLoser();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the largest profit
 app.get("/largestDollarWinner", async (req, res) => {
     const counts = await getLargestDollarWinner();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the largest loss
 app.get("/largestDollarLoser", async (req, res) => {
     const counts = await getLargestDollarLoser();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the sum of paid fees
 app.get("/sumFeesPaid", async (req, res) => {
     const counts = await getSumFeesPaid();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the average profit
 app.get("/avgWinner", async (req, res) => {
     const counts = await getAvgWinner();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the average loss
 app.get("/avgLoser", async (req, res) => {
     const counts = await getAvgLoser();
     res.send(JSON.stringify(counts));
 });
 
+// Calls a function that uses an SQL query to return the net profit/loss
 app.get("/totalPNL", async (req, res) => {
     const counts = await getTotalPNL();
     res.send(JSON.stringify(counts));
 });
 
 app.use(express.static('client'));
-
-app.get('*', (req, res) => {
-    res.send('Error');
-});
 
 app.listen(port, () => {
     console.log(`App now listening at http://localhost:${port}`);

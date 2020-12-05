@@ -1,3 +1,4 @@
+// Renders the upper-left chart 
 async function renderChart(obj, walletid) {
     const labels = [];
     const data = [];
@@ -42,6 +43,7 @@ async function renderChart(obj, walletid) {
     });
 }
 
+// Renders the four charts on the upper right corner of the home page
 async function renderChart2(id, resource, labels) {
     const data = [];
     const response = await fetch(`/${resource}`)
@@ -103,6 +105,7 @@ async function renderChart2(id, resource, labels) {
     });
 }
 
+// Sets statistics for the statistics portion of the home page
 async function setStats() {
     const reqs = ['/totalPNL', '/avgWinner', '/avgLoser', '/largestPercentWinner',
         '/largestPercentLoser', '/largestDollarWinner', '/largestDollarLoser', '/sumFeesPaid'];
@@ -124,6 +127,7 @@ async function setStats() {
 
 }
 
+// Inputs for objectives
 function chart_objective() {
     const start_cap = document.getElementById('starting-capital').value;
     const gain = document.getElementById('percent-gain').value;

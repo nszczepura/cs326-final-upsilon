@@ -96,10 +96,6 @@ async function insertWallet(transactTime, transactType, amount, fee, address, tr
     return await connectAndRun(db => db.any("INSERT INTO wallethistory Values($1, $2, $3, $4, $5, $6, $7, $8);", [transactTime, transactType, amount, fee, address, transactStatus, walletBalance, walletid]));
 }
 
-async function getTradeHistory() {
-    return await connectAndRun(db => db.any("SELECT * FROM Trades;"));
-}
-
 async function getWalletHistory() {
     return await connectAndRun(db => db.any("SELECT * FROM wallethistory;"));
 }
@@ -286,11 +282,6 @@ app.get('/private/:userID/',
             res.redirect('/private/');
         }
     });
-
-app.get("/tradeHistory", async (req, res) => {
-    const tradeList = await getTradeHistory();
-    res.send(JSON.stringify(tradeList));
-});
 
 app.get("/walletHistory", async (req, res) => {
     const wallet = await getWalletHistory();

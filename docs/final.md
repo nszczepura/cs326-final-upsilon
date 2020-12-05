@@ -56,6 +56,7 @@ Log in and register to upload your history and see your stats
 ## APIs
 
 POST /account
+
 POST /uploadcsv
 GET /account
 GET /logout

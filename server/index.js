@@ -137,6 +137,27 @@ async function getBestGainWorstLoss() {
 
 }
 
+async function getLargestPercentWinner() {
+    return await connectAndRun(db => db.any(
+        "SELECT MAX(amount/walletbalance) result FROM wallethistory;"));
+}
+
+async function getLargestPercentLoser() {
+    return await connectAndRun(db => db.any(
+        "SELECT MIN(amount/walletbalance) result FROM wallethistory;"));
+}
+
+async function getLargestDollarWinner() {
+    return await connectAndRun(db => db.any(
+        "SELECT MAX(amount) result FROM wallethistory;"));
+}
+
+async function getLargestDollarLoser() {
+    return await connectAndRun(db => db.any(
+        "SELECT MIN(amount) result FROM wallethistory;"));
+}
+
+
 // user functions
 
 // Returns true iff the user exists.
@@ -273,6 +294,26 @@ app.get("/avgGainLoss", async (req, res) => {
 
 app.get("/bestGainWorstLoss", async (req, res) => {
     const counts = await getBestGainWorstLoss();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/largestPercentWinner", async (req, res) => {
+    const counts = await getLargestPercentWinner();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/largestPercentLoser", async (req, res) => {
+    const counts = await getLargestPercentLoser();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/largestDollarWinner", async (req, res) => {
+    const counts = await getLargestDollarWinner();
+    res.send(JSON.stringify(counts));
+});
+
+app.get("/largestDollarLoser", async (req, res) => {
+    const counts = await getLargestDollarLoser();
     res.send(JSON.stringify(counts));
 });
 

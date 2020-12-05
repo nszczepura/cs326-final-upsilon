@@ -106,7 +106,7 @@ async function renderChart2(id, resource, labels) {
 async function setStats() {
     const reqs = ['/largestPercentWinner', '/largestPercentWinner', '/largestPercentWinner', 
     '/largestPercentWinner', '/largestPercentWinner', '/largestPercentWinner',
-     '/largestPercentWinner', '/largestDollarWinner', '/largestDollarWinner', '/largestPercentWinner', 
+     '/largestPercentLoser', '/largestDollarWinner', '/largestDollarLoser', '/largestPercentWinner', 
      '/largestPercentWinner', '/largestPercentWinner'];
 
      for(let i = 0; i < 10; ++i){
